@@ -22,12 +22,8 @@ client.connect().then(() => {
 }).catch(handleError);
 
 app.get('/', homePage);
-app.get('/searches/new' , getForm)
 app.post('/searches' , getDataFromApi)
 
-function getForm(request,response) {
-    response.render("pages/searches/new")
-}
 
 function getDataFromApi(request,response) {
     let searchKey = request.body.search;
