@@ -22,7 +22,7 @@ client.connect().then(() => {
 }).catch(handleError);
 
 app.get('/', homePage);
-app.post('/searches', getDataFromApi)
+app.post('/searches', getDataFromApi);
 
 
 function getDataFromApi(request, response) {
