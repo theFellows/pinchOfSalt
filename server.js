@@ -23,6 +23,21 @@ client.connect().then(() => {
 
 app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
+app.get('/details/:id',getById)
+
+function getById(request,response){
+    let id = request.params.id;
+    let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+
+    superagent.get(urlById).then(data => {
+        let result = data.body.meals.map(element => {
+            return new RecipeDetails(element)
+        });
+        response.render('pages/searches/detail', {
+            recipesDetails: result
+        });
+    })
+}
 
 function getRandomRecipes(request, response) {
     let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
@@ -62,6 +77,7 @@ function getDataFromApi(request, response) {
         let result = data.body.meals.map(element => {
             return new Recipes(element)
         });
+        // console.log(result)
         response.render('pages/searches/show', {
             recipesDetails: result
         });
@@ -103,7 +119,7 @@ function getIngrArr(data) {
         if (value != '  ' && value != 'null null' && value != ' ') {
             return (value);
         }
-    }).catch(handleError);
+    })
     return (newIngredients);
 }
-//-----------------------//
+
