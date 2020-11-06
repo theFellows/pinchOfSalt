@@ -16,7 +16,7 @@ const DATABASE_URL = process.env.DATABASE_URL;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 const client = new pg.Client(DATABASE_URL);
-
+let randomlyRecips = [];
 client.connect().then(() => {
     app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
 }).catch(handleError);
@@ -24,6 +24,29 @@ client.connect().then(() => {
 app.get('/', homePage);
 app.get('/searches/new' , getForm)
 app.post('/searches' , getDataFromApi)
+app.get('/random' , getRandomItem)
+
+function getRandomItem(request,response) {
+    let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`,
+    `https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`,
+    `https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`]
+
+    for(let i=0 ; i<6 ; i++) {
+        superagent.get(urls[i]).then(data=>{
+           data.body.meals.map(element => {
+            randomlyRecips.push(new Recipes(element))
+            });
+        })
+    }    
+
+    if(randomlyRecips.length > 7) {
+      randomlyRecips = [];
+    }
+
+    response.render('pages/index', {
+        recipesRandomly: randomlyRecips
+    });
+}
 
 function getForm(request,response) {
     response.render("pages/searches/new")

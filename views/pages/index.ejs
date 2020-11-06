@@ -5,7 +5,22 @@
 <body>
         <%- include ('layouts/header') %>
         <main>
-            hello
+             <% recipesRandomly.forEach(item=>{ %>
+<section class="resultDetails">
+          <img src="<%= item.image_url %>" />
+
+          <h2><%= item.name %></h2>
+
+          <h4><%= item.category %></h3>
+
+          <p><%= item.area %></p>
+
+          <p><%= item.instructions %></p>
+
+          <iframe src="<%= item.video_url %>"></iframe>
+          <br />
+        </section>
+        <% }); %>
         </main>
         <%- include ('layouts/footer') %>
 </body>
