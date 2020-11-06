@@ -22,8 +22,8 @@ client.connect().then(() => {
 }).catch(handleError);
 
 app.get('/', homePage);
-app.post('/searches' , getDataFromApi)
-app.get('/random' , getRandomItem)
+app.post('/searches' , getDataFromApi);
+app.get('/random' , getRandomItem);
 
 function getRandomItem(request,response) {
     let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`,
@@ -47,27 +47,26 @@ function getRandomItem(request,response) {
     });
 }
 
-
-function getDataFromApi(request,response) {
+function getDataFromApi(request, response) {
     let searchKey = request.body.search;
     let sortBy = request.body.sort;
     let url;
-    if(sortBy === 'name') {
+    if (sortBy === 'name') {
         url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey}`
-    }else if(sortBy === 'category'){
+    } else if (sortBy === 'category') {
         url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${searchKey}`
-    }else if(sortBy === 'area'){
+    } else if (sortBy === 'area') {
         url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${searchKey}`
     }
 
-superagent.get(url).then(data=>{
-    let result = data.body.meals.map(element => {
+    superagent.get(url).then(data => {
+        let result = data.body.meals.map(element => {
             return new Recipes(element)
-    });
-    response.render('pages/searches/show', {
-        recipesDetails: result
-    });
-})
+        });
+        response.render('pages/searches/show', {
+            recipesDetails: result
+        });
+    }).catch(handleError);
 }
 
 function homePage(request, response) {
@@ -75,14 +74,37 @@ function homePage(request, response) {
 }
 
 function Recipes(data) {
-this.name = data.strMeal;
-this.category = data.strCategory;
-this.area = data.strArea;
-this.image_url = data.strMealThumb;
-this.video_url = data.strYoutube;
-this.instructions = data.strInstructions;
+    this.id = data.idMeal || 'No ID Available';
+    this.name = data.strMeal || 'No Name Available';
+    this.image_url = data.strMealThumb || 'No Image Available';
 }
 
+function RecipeDetails(data){
+    this.id = data.idMeal || 'No ID Available';
+    this.name = data.strMeal || 'No Name Available';
+    this.category = data.strCategory || 'No category Available'
+    this.area = data.strArea || 'No Origin Available';
+    this.image_url = data.strMealThumb || 'No Image Available';
+    this.video_url = data.strYoutube.replace("watch", "embed") || 'No Video Available';
+    this.instructions = data.strInstructions || 'No instructions Available';
+    this.ingredients = getIngrArr(data) || 'No Ingredients Available'; 
+
+}
+
+//helper function
+function getIngrArr(data){
+    let ingredients = [];
+    for (let i = 0; i < 20; i++) {
+        ingredients[i] = `${data[`strMeasure${i+1}`]} ${data[`strIngredient${i+1}`]}`;
+    }
+    let newIngredients = ingredients.filter(value =>{
+        if (value !='  ' && value != 'null null' && value != ' '){
+            return(value);
+        }
+    })
+    console.log(newIngredients);
+    return(newIngredients);
+}
 function handleError() {
     response.status(500).send('Something Went Wrong');
 }

@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../layouts/head.ejs') %>
-    <title></title>
-  </head>
-  <body>
-    <header>
-      <%- include('../layouts/header.ejs')%>
-    </header>
-    <main>
-      <ul>
-        <% recipesDetails.forEach(item=>{ %>
-<section class="resultDetails">
-          <img src="<%= item.image_url %>" />
 
-          <h2><%= item.name %></h2>
+<head>
+  <%- include('../layouts/head.ejs') %>
+  <title></title>
+</head>
 
-          <h4><%= item.category %></h3>
+<body>
+  <header>
+    <%- include('../layouts/header.ejs')%>
+  </header>
+  <main>
+    <ul>
+      <% recipesDetails.forEach(item=>{ %>
+      <section class="resultView">
+        <img src="<%= item.image_url %>" />
+        <h2><%= item.name %></h2>
+      </section>
+      <% }); %>
+    </ul>
+  </main>
+</body>
 
-          <p><%= item.area %></p>
-
-          <p><%= item.instructions %></p>
-
-          <iframe src="<%= item.video_url %>"></iframe>
-          <br />
-        </section>
-        <% }); %>
-      </ul>
-    </main>
-  </body>
 </html>
