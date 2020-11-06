@@ -16,34 +16,33 @@ const DATABASE_URL = process.env.DATABASE_URL;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 const client = new pg.Client(DATABASE_URL);
-let randomlyRecips = [];
+let randomRecipes = [];
 client.connect().then(() => {
     app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
 }).catch(handleError);
 
-app.get('/', homePage);
-app.post('/searches' , getDataFromApi);
-app.get('/random' , getRandomItem);
+app.get('/', getRandomRecipes);
+app.post('/searches', getDataFromApi);
 
-function getRandomItem(request,response) {
-    let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`,
-    `https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`,
-    `https://www.themealdb.com/api/json/v1/1/random.php`,`https://www.themealdb.com/api/json/v1/1/random.php`]
+function getRandomRecipes(request, response) {
+    let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
+        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
+        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`]
 
-    for(let i=0 ; i<6 ; i++) {
-        superagent.get(urls[i]).then(data=>{
-           data.body.meals.map(element => {
-            randomlyRecips.push(new Recipes(element))
+    for (let i = 0; i < 6; i++) {
+        superagent.get(urls[i]).then(data => {
+            data.body.meals.map(element => {
+                randomRecipes.push(new Recipes(element))
             });
-        })
-    }    
+        }).catch(handleError);
+    }
 
-    if(randomlyRecips.length > 7) {
-      randomlyRecips = [];
+    if (randomRecipes.length > 7) {
+        randomRecipes = [];
     }
 
     response.render('pages/index', {
-        recipesRandomly: randomlyRecips
+        recipesRandomly: randomRecipes
     });
 }
 
@@ -79,7 +78,7 @@ function Recipes(data) {
     this.image_url = data.strMealThumb || 'No Image Available';
 }
 
-function RecipeDetails(data){
+function RecipeDetails(data) {
     this.id = data.idMeal || 'No ID Available';
     this.name = data.strMeal || 'No Name Available';
     this.category = data.strCategory || 'No category Available'
@@ -87,24 +86,24 @@ function RecipeDetails(data){
     this.image_url = data.strMealThumb || 'No Image Available';
     this.video_url = data.strYoutube.replace("watch", "embed") || 'No Video Available';
     this.instructions = data.strInstructions || 'No instructions Available';
-    this.ingredients = getIngrArr(data) || 'No Ingredients Available'; 
-
+    this.ingredients = getIngrArr(data) || 'No Ingredients Available';
 }
 
-//helper function
-function getIngrArr(data){
-    let ingredients = [];
-    for (let i = 0; i < 20; i++) {
-        ingredients[i] = `${data[`strMeasure${i+1}`]} ${data[`strIngredient${i+1}`]}`;
-    }
-    let newIngredients = ingredients.filter(value =>{
-        if (value !='  ' && value != 'null null' && value != ' '){
-            return(value);
-        }
-    })
-    console.log(newIngredients);
-    return(newIngredients);
-}
 function handleError() {
     response.status(500).send('Something Went Wrong');
 }
+
+//helper functions
+function getIngrArr(data) {
+    let ingredients = [];
+    for (let i = 0; i < 20; i++) {
+        ingredients[i] = `${data[`strMeasure${i + 1}`]} ${data[`strIngredient${i + 1}`]}`;
+    }
+    let newIngredients = ingredients.filter(value => {
+        if (value != '  ' && value != 'null null' && value != ' ') {
+            return (value);
+        }
+    }).catch(handleError);
+    return (newIngredients);
+}
+//-----------------------//
