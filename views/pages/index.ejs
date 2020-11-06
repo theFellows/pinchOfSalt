@@ -5,6 +5,7 @@
 <body>
         <%- include ('layouts/header') %>
         <main>
+
              <% recipesRandomly.forEach(item=>{ %>
 <section class="resultDetails">
           <img src="<%= item.image_url %>" />
@@ -22,6 +23,17 @@
         </section>
         <% }); %>
         </main>
+
+            <form action="/searches" method="POST">
+                <input type="text" name="search">
+            <select name="sort">
+                <option value="name">Name</option>
+                <option value="category">Category</option>
+                <option value="area">Area</option>
+            </select>
+        <input type="submit" value="submit">
+        </form>        </main>
+
         <%- include ('layouts/footer') %>
 </body>
 
