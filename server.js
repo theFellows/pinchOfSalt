@@ -13,7 +13,6 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'));
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL;
-//app.set('views', 'views/');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 const client = new pg.Client(DATABASE_URL);
@@ -23,10 +22,46 @@ client.connect().then(() => {
 }).catch(handleError);
 
 app.get('/', homePage);
+app.get('/searches/new' , getForm)
+app.post('/searches' , getDataFromApi)
 
+function getForm(request,response) {
+    response.render("pages/searches/new")
+}
+
+function getDataFromApi(request,response) {
+    let searchKey = request.body.search;
+    let sortBy = request.body.sort;
+    let url;
+    if(sortBy === 'name') {
+        url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey}`
+    }else if(sortBy === 'category'){
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${searchKey}`
+    }else if(sortBy === 'area'){
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${searchKey}`
+    }
+
+superagent.get(url).then(data=>{
+    let result = data.body.meals.map(element => {
+            return new Recipes(element)
+    });
+    response.render('pages/searches/show', {
+        recipesDetails: result
+    });
+})
+}
 
 function homePage(request, response) {
     response.render('pages/index');
+}
+
+function Recipes(data) {
+this.name = data.strMeal;
+this.category = data.strCategory;
+this.area = data.strArea;
+this.image_url = data.strMealThumb;
+this.video_url = data.strYoutube;
+this.instructions = data.strInstructions;
 }
 
 function handleError() {
