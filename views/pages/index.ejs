@@ -20,17 +20,11 @@
         <section id="randomSection">
         <% recipesRandomly.forEach(item=>{ %>
             <section class="resultDetails">
-                      <img src="<%= item.image_url %>" />
-            
+                <form action="/details/<%= item.id %>">
+                     <img src="<%= item.image_url %>" />
                       <h2><%= item.name %></h2>
-            
-                      <h4><%= item.category %></h3>
-            
-                      <p><%= item.area %></p>
-            
-                      <p><%= item.instructions %></p>
-            
-                      <iframe src="<%= item.video_url %>"></iframe>
+                      <input type="submit" value="show details">
+                    </form>
                       <br />
                     </section>
                     <% }); %>
