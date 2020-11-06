@@ -26,7 +26,7 @@ app.get('/', homePage);
 
 
 function homePage(request, response) {
-    response.send('Hello, I am alive.');
+    response.render('pages/index');
 }
 
 function handleError() {
