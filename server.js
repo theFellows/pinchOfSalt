@@ -25,6 +25,19 @@ app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
+app.get('/details/:id',getById)
+function getById(request,response){
+    let id = request.params.id;
+    let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    superagent.get(urlById).then(data => {
+        let result = data.body.meals.map(element => {
+            return new RecipeDetails(element)
+        });
+        response.render('pages/searches/detail', {
+            recipesDetails: result
+        });
+    })
+}
 
 
 function getRandomRecipes(request, response) {
@@ -98,6 +111,57 @@ function getRecipesByCategory(request, response){
 
 }
 
+////////////sondos
+app.get('/recipes', getRecipes)
+function getRecipes(request,response){
+    const sql = 'SELECT * FROM recipes;';
+    client.query(sql).then(data => response.render('pages/recipes/show', { recipesList: data.rows}))
+}
+app.get('/recipes/:id', getDetails)
+function getDetails(request, response) {
+    const sql = 'SELECT * FROM recipes WHERE id=$1;';
+    const parameter = [request.params.id];
+    client.query(sql, parameter).then(data => response.render('pages/recipes/details', { recipe: data.rows[0]}))
+  }
+  app.post('/recipes/:id', ReadRecipe)
+  function ReadRecipe(request,response){
+    const sql = 'SELECT * FROM recipes WHERE id=$1;';
+    const parameter = [request.params.id];
+    client.query(sql, parameter).then(data => response.render('pages/recipes/edit', { recipesList: data.rows[0] }))
+  }
+  app.put('/recipes/:id', updateDetails);
+  function updateDetails(request, response) {
+    const { name, image_url, category, instructions, area, ingredients, video_url} = request.body;
+    const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
+    const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
+    client.query(sql, parameter).then(() => {
+      response.redirect(`/recipes/${parameter[7]}`)
+    });
+  }
+  app.delete('/recipes/:id', deleteRecipe);
+  function deleteRecipe(request,response){
+    const parameter = request.params.id;
+    
+    const sql = 'DELETE FROM recipes WHERE id=$1';
+    client.query(sql, [parameter]).then(()=>{
+      response.redirect('/recipes');
+    });
+  }
+  app.post('/recipes', addRecipe)
+  function addRecipe(request,response){
+    const { name, image_url, category, instructions, area, ingredients, video_url} = request.body;
+    const sql='INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
+    const parameter=[name, category, area, image_url, video_url, ingredients, instructions];
+    client.query(sql,parameter).then((data)=>{
+        response.redirect(`/recipes/${data.rows[0].id}`)
+
+    }).catch(console.error());
+  }
+  app.get('/add',addRecipes)
+  function addRecipes(request,response){
+      response.render('pages/recipes/add')
+  }
+
 
 function homePage(request, response) {
     response.render('pages/index');
@@ -126,15 +190,25 @@ function handleError() {
 
 //helper functions
 function getIngrArr(data) {
-    let ingredients = [];
+    let ingredientsPicture = [];
+    let ingredientsMeasure = [];
     for (let i = 0; i < 20; i++) {
-        ingredients[i] = `${data[`strMeasure${i + 1}`]} ${data[`strIngredient${i + 1}`]}`;
+        ingredientsPicture[i] = `${data[`strIngredient${i + 1}`]}`;
+        ingredientsMeasure[i] = `${data[`strMeasure${i + 1}`]}`;
     }
-    let newIngredients = ingredients.filter(value => {
+    let newIngredients = ingredientsPicture.filter(value => {
         if (value != '  ' && value != 'null null' && value != ' ') {
             return (value);
         }
-    }).catch(handleError);
-    return (newIngredients);
+    })
+    let newIngredientsMeasure = ingredientsMeasure.filter(value => {
+        if (value != '  ' && value != 'null null' && value != ' ') {
+            return (value);
+        }
+    })
+    return ({
+        ingredientsPicture : newIngredients,
+        ingredientsMeasure : newIngredientsMeasure
+    });
 }
-//-----------------------//
+
