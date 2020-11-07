@@ -215,7 +215,7 @@ function getIngrArr(data) {
         ingredients[i] = `${data[`strMeasure${i+1}`]},${data[`strIngredient${i+1}`]}`;
     }
     let newIngredients = ingredients.filter(value =>{
-        if (value !='  ' && value != 'null null' && value != ' '){
+        if (value !='  ' && value != 'null null' && value != ' ' && value !== ','){
             return(value);
         }
     })
