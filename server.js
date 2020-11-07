@@ -136,7 +136,6 @@ function getDetails(request, response) {
     const parameter = [request.params.id];
     client.query(sql, parameter).then(data =>{
         let ingrArr = stringToArray(data.rows[0].ingredients);
-        console.log(ingrArr);
         response.render('pages/recipes/details', { recipe: data.rows[0], ingrArr })
     })
 
@@ -145,7 +144,10 @@ function getDetails(request, response) {
 function ReadRecipe(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data => response.render('pages/recipes/edit', { recipesList: data.rows[0] }))
+    client.query(sql, parameter).then(data =>{
+        let ingrArr = stringToArray(data.rows[0].ingredients);
+        console.log(ingrArr);
+        response.render('pages/recipes/edit', { recipesList: data.rows[0],ingrArr })})
 }
 
 function updateDetails(request, response) {
@@ -173,7 +175,6 @@ function addRecipe(request, response) {
         let str=`${measure[i]}+${ingredient[i]}`;
         ingredients.push(str)
     }
-    console.log(ingredients);
     const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions];
     client.query(sql, parameter).then((data) => {
