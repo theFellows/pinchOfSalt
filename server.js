@@ -156,7 +156,14 @@ function deleteRecipe(request, response) {
 }
 
 function addRecipe(request, response) {
-    const { name, image_url, category, instructions, area, ingredients, video_url } = request.body;
+    let ingredients=[]
+    
+    const { name, image_url, category, instructions, area, ingredient, measure, video_url } = request.body;
+    for (let i=0; i<ingredient.length;i++){
+        let str=`${measure[i]}+${ingredient[i]}`;
+        ingredients.push(str)
+    }
+    console.log(ingredients);
     const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions];
     client.query(sql, parameter).then((data) => {
