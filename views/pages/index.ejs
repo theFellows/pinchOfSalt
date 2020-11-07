@@ -3,24 +3,24 @@
 <%- include ('layouts/head') %>
 
 <body>
-        <%- include ('layouts/header') %>
-        <main>
-            <section id="searchFormSection">
+    <%- include ('layouts/header') %>
+    <main>
+        <section id="searchFormSection">
             <form action="/searches" method="POST">
                 <input type="text" name="search">
-            <select name="sort">
-                <option value="name">Name</option>
-                <option value="category">Category</option>
-                <option value="area">Origin</option>
-            </select>
-        <input type="submit" value="submit">
-        </form>  
-        </section>     
+                <select name="sort">
+                    <option value="name">Name</option>
+                    <option value="category">Category</option>
+                    <option value="area">Origin</option>
+                </select>
+                <input type="submit" value="submit">
+            </form>
+        </section>
 
         <section id="randomSection">
-        <% recipesRandomly.forEach(item=>{ %>
+            <% recipesRandomly.forEach(item=>{ %>
             <section class="resultDetails">
-                <form action="/details/<%= item.id %>">
+                 <form action="/details/<%= item.id %>">
                      <img src="<%= item.image_url %>" />
                       <h2><%= item.name %></h2>
                       <input type="submit" value="show details">
@@ -28,7 +28,7 @@
                       <br />
                     </section>
                     <% }); %>
-        </section>
+            </section>
 
         <%- include ('layouts/footer') %>
 </body>
