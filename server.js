@@ -35,6 +35,7 @@ app.put('/recipes/:id', updateDetails);
 app.delete('/recipes/:id', deleteRecipe);
 
 
+
 function getById(request, response) {
     let id = request.params.id;
     let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -168,6 +169,14 @@ function addRecipes(request, response) {
     response.render('pages/recipes/add')
 }
 
+function getSavedRecipes(request, response){
+    response.send('hi');
+}
+
+function getRecipeToSave(request, response){
+    response.send('hello');
+
+}
 
 function homePage(request, response) {
     response.render('pages/index');
