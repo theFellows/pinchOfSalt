@@ -146,7 +146,6 @@ function ReadRecipe(request, response) {
     const parameter = [request.params.id];
     client.query(sql, parameter).then(data =>{
         let ingrArr = stringToArray(data.rows[0].ingredients);
-        console.log(ingrArr);
         response.render('pages/recipes/edit', { recipesList: data.rows[0],ingrArr })})
 }
 
