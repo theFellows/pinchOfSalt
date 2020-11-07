@@ -134,7 +134,12 @@ function getRecipes(request, response) {
 function getDetails(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data => response.render('pages/recipes/details', { recipe: data.rows[0] }))
+    client.query(sql, parameter).then(data =>{
+        let ingrArr = stringToArray(data.rows[0].ingredients);
+        console.log(ingrArr);
+        response.render('pages/recipes/details', { recipe: data.rows[0], ingrArr })
+    })
+
 }
 
 function ReadRecipe(request, response) {
