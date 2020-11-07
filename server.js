@@ -33,6 +33,10 @@ app.get('/recipes/:id', getDetails);
 app.post('/recipes/:id', ReadRecipe);
 app.put('/recipes/:id', updateDetails);
 app.delete('/recipes/:id', deleteRecipe);
+app.get('/bookmarks', getBookmarks);
+app.post('/bookmarks/:id', addBookmark);
+app.get('/bookmarks/:id', getBookmarkDetails);
+app.delete('/bookmarks/:id', deleteBookmark);
 
 
 
@@ -40,7 +44,6 @@ function getById(request, response) {
     let id = request.params.id;
     let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     superagent.get(urlById).then(data => {
-        console.log(data.body.meals);
         let result = data.body.meals.map(element => {
             return new RecipeDetails(element);
         });
@@ -170,14 +173,45 @@ function addRecipes(request, response) {
     response.render('pages/recipes/add')
 }
 
-function getSavedRecipes(request, response){
-    response.send('hi');
+// Bookmarks (Batool)
+function getBookmarks(request, response) {
+    const sql = 'SELECT * FROM bookmarks;';
+    client.query(sql).then(data => response.render('pages/bookmarks/show', { bookmarksList: data.rows }));
 }
 
-function getRecipeToSave(request, response){
-    response.send('hello');
-
+function getBookmarkDetails(request, response) {
+    const sql = 'SELECT * FROM bookmarks WHERE id=$1;';
+    const parameter = [request.params.id];
+    client.query(sql, parameter).then(data => {
+        let ingrArr = stringToArray(data.rows[0].ingredients);
+        response.render('pages/bookmarks/details', { bookmark: data.rows[0], ingrArr })
+    })
 }
+
+function addBookmark(request, response) {
+    let id = request.params.id;
+    let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    superagent.get(urlById).then(data => {
+        let result = data.body.meals.map(element => {
+            return new RecipeDetails(element);
+        });
+        const { id, name, category, area, image_url, video_url, instructions, ingredients } = result[0];
+        const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
+        const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions];
+        client.query(sql, parameter).then((data) => {
+            response.redirect(`/d${id}`)
+        }).catch(handleError);
+    }).catch(handleError);
+}
+
+function deleteBookmark(request, response) {
+    const parameter = request.params.id;
+    const sql = 'DELETE FROM bookmarks WHERE id=$1';
+    client.query(sql, [parameter]).then(() => {
+        response.redirect('/bookmarks');
+    }).catch(handleError);
+}
+
 
 function homePage(request, response) {
     response.render('pages/index');
@@ -197,11 +231,7 @@ function RecipeDetails(data) {
     this.image_url = data.strMealThumb;
     this.video_url = data.strYoutube.replace("watch", "embed");
     this.instructions = data.strInstructions;
-    console.log('data:')
-    console.log(data);
-    console.log('ingredients::::::')
     this.ingredients = getIngrArr(data) || [];
-    console.log(this.ingredients);
 }
 
 function handleError() {
@@ -212,14 +242,23 @@ function handleError() {
 function getIngrArr(data) {
     let ingredients = [];
     for (let i = 0; i < 20; i++) {
-        ingredients[i] = `${data[`strMeasure${i+1}`]},${data[`strIngredient${i+1}`]}`;
+        ingredients[i] = `${data[`strMeasure${i + 1}`]}+${data[`strIngredient${i + 1}`]}`;
     }
-    let newIngredients = ingredients.filter(value =>{
-        if (value !='  ' && value != 'null null' && value != ' ' && value !== ','){
-            return(value);
+    let newIngredients = ingredients.filter(value => {
+        if (value != '  ' && value != 'null' && value != 'null null' && value != 'null+null' && value != ' ' && value !== '+' && value != ' +' && value !== ',null') {
+            return (value);
         }
     })
-    console.log(newIngredients);
-    return(newIngredients);
+    return (newIngredients);
 }
 
+function stringToArray(str) {
+    str = str.replace("{", "");
+    str = str.replace("}", "");
+    str = str.split(',');
+    let arr = str.map(value => {
+        value = value.replace("\"", "");
+        return (value.replace("\"", ""));
+      })
+    return(arr);
+}

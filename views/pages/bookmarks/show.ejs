@@ -1,0 +1,23 @@
+<!-- cookbook -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My CookBook</title>
+    <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+    <p class="elementsCount">Number of bookmarks in your cookbook: <%= bookmarksList.length %></p>
+<section>
+    <% bookmarksList.forEach(bookmark => { %>
+    <section class="recipe-template">
+        <p><br><%= bookmark.name %></p><br><br>
+        <img src="<%= bookmark.image_url %>"><br><br>
+        <button id="viewDetailsButton"><a href="/bookmarks/<%= bookmark.id %>">View Recipe</a></button>
+
+    </section>
+    <% }); %>
+</section>
+</body>
+</html>

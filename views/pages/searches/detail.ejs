@@ -25,16 +25,18 @@
           <p>Ingredients: </p>       
             <ul>
               <% item.ingredients.forEach(ingredient =>{ %>
-              <li><%= ingredient.split(',')[0] %> <%= ingredient.split(',')[1] %></li>
-              <img src="https://www.themealdb.com/images/ingredients/<%= ingredient.split(',')[1] %>.png">
+              <li><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %></li>
+              <img src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
                 <% }); %>
             </ul>
         
           <p>Instructions: </p>
           <p><%= item.instructions %></p>
-
           <iframe src="<%= item.video_url %>"></iframe>
           <br />
+          <form action="/bookmarks/<%= item.id %>" method="POST">
+          <button type="submit">Bookmark Recipe</button>
+        </form>
       
 
       </section>
