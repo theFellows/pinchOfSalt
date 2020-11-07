@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Your Recipes</title>
 </head>
+
 <body>
     <form action="/recipes" method="POST">
         <label for="name">Recipe Name</label>
@@ -27,9 +29,16 @@
         <br>
         <input class="edit" type="text" value="" name="area"></input>
         <br>
-        <label for="ingredients">Ingredients</label>
-        <br>
-        <input class="edit" type="text" value="" name="ingredients"></input>
+        <section id="addSection">
+            <label for="ingredients">Ingredient</label>
+            <br>
+            <input class="edit" type="text" value="" name="ingredient"></input>
+            <br>
+            <label for="ingredients">Measure</label>
+            <br>
+            <input class="edit" type="text" value="" name="measure"></input>
+            <p id="addIngredient">Add Another Ingredient</p>
+        </section>
         <br>
         <label for="video_url">video_url</label>
         <br>
@@ -39,5 +48,24 @@
         <button type="submit">Update Recipe</button>
 
     </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+     $('#addIngredient').click(()=>{
+         $('#addSection').append(`<label for="ingredients">Ingredient</label>
+            <br>
+            <input class="edit" type="text" value="" name="ingredient"></input>
+            <br>
+            <label for="ingredients">Measure</label>
+            <br>
+            <input class="edit" type="text" value="" name="measure"></input>
+            <br> `)
+        
+     })
+            
+
+        
+    </script>
 </body>
+
 </html>
+
