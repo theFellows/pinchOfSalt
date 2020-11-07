@@ -23,6 +23,9 @@ client.connect().then(() => {
 
 app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
+app.get('/a:area_name', getRecipesByArea);
+app.get('/c:category_name', getRecipesByCategory);
+
 
 function getRandomRecipes(request, response) {
     let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
@@ -51,11 +54,11 @@ function getDataFromApi(request, response) {
     let sortBy = request.body.sort;
     let url;
     if (sortBy === 'name') {
-        url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey}`
+        url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey}`;
     } else if (sortBy === 'category') {
-        url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${searchKey}`
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${searchKey}`;
     } else if (sortBy === 'area') {
-        url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${searchKey}`
+        url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${searchKey}`;
     }
 
     superagent.get(url).then(data => {
@@ -67,6 +70,34 @@ function getDataFromApi(request, response) {
         });
     }).catch(handleError);
 }
+
+function getRecipesByArea(request, response) {
+    const areaName = request.params.area_name;
+    let url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${areaName}`;
+    superagent.get(url).then(data => {
+        let result = data.body.meals.map(element => {
+            return new Recipes(element)
+        });
+        response.render('pages/searches/show', {
+            recipesDetails: result
+        });
+    }).catch(handleError);
+}
+
+function getRecipesByCategory(request, response){
+    const categoryName = request.params.category_name;
+    let url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`;
+    superagent.get(url).then(data => {
+        let result = data.body.meals.map(element => {
+            return new Recipes(element)
+        });
+        response.render('pages/searches/show', {
+            recipesDetails: result
+        });
+    }).catch(handleError);
+
+}
+
 
 function homePage(request, response) {
     response.render('pages/index');
