@@ -25,7 +25,7 @@ app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
-app.get('/details/:id', getById);
+app.get('/d:id', getById);
 app.get('/recipes', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
@@ -40,6 +40,7 @@ function getById(request, response) {
     let id = request.params.id;
     let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     superagent.get(urlById).then(data => {
+        console.log(data.body.meals);
         let result = data.body.meals.map(element => {
             return new RecipeDetails(element);
         });
@@ -189,14 +190,18 @@ function Recipes(data) {
 }
 
 function RecipeDetails(data) {
-    this.id = data.idMeal || 'No ID Available';
-    this.name = data.strMeal || 'No Name Available';
-    this.category = data.strCategory || 'No category Available'
-    this.area = data.strArea || 'No Origin Available';
-    this.image_url = data.strMealThumb || 'No Image Available';
-    this.video_url = data.strYoutube.replace("watch", "embed") || 'No Video Available';
-    this.instructions = data.strInstructions || 'No instructions Available';
-    this.ingredients = getIngrArr(data) || 'No Ingredients Available';
+    this.id = data.idMeal;
+    this.name = data.strMeal;
+    this.category = data.strCategory;
+    this.area = data.strArea;
+    this.image_url = data.strMealThumb;
+    this.video_url = data.strYoutube.replace("watch", "embed");
+    this.instructions = data.strInstructions;
+    console.log('data:')
+    console.log(data);
+    console.log('ingredients::::::')
+    this.ingredients = getIngrArr(data) || [];
+    console.log(this.ingredients);
 }
 
 function handleError() {
@@ -205,25 +210,16 @@ function handleError() {
 
 //helper functions
 function getIngrArr(data) {
-    let ingredientsPicture = [];
-    let ingredientsMeasure = [];
+    let ingredients = [];
     for (let i = 0; i < 20; i++) {
-        ingredientsPicture[i] = `${data[`strIngredient${i + 1}`]}`;
-        ingredientsMeasure[i] = `${data[`strMeasure${i + 1}`]}`;
+        ingredients[i] = `${data[`strMeasure${i+1}`]},${data[`strIngredient${i+1}`]}`;
     }
-    let newIngredients = ingredientsPicture.filter(value => {
-        if (value != '  ' && value != 'null null' && value != ' ') {
-            return (value);
+    let newIngredients = ingredients.filter(value =>{
+        if (value !='  ' && value != 'null null' && value != ' '){
+            return(value);
         }
-    }).catch(handleError);
-    let newIngredientsMeasure = ingredientsMeasure.filter(value => {
-        if (value != '  ' && value != 'null null' && value != ' ') {
-            return (value);
-        }
-    }).catch(handleError);
-    return ({
-        ingredientsPicture: newIngredients,
-        ingredientsMeasure: newIngredientsMeasure
-    });
+    })
+    console.log(newIngredients);
+    return(newIngredients);
 }
 

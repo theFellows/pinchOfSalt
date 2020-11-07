@@ -22,16 +22,14 @@
 
           <p>Origin: <%= item.area %></p>
 
-          <p>Ingredients: </p>
-          <ul>
-     <% item.ingredients.ingredientsPicture.forEach(ingredient =>{ %>
-      <li><%= ingredient %></li>
-            <img src="https://www.themealdb.com/images/ingredients/<%= ingredient %>.png">
-              <% }); %>
-              <% item.ingredients.ingredientsMeasure.forEach(ingredient =>{ %>
-                <li><%= ingredient %></li>
-                  <% }); %>
-          </ul>
+          <p>Ingredients: </p>       
+            <ul>
+              <% item.ingredients.forEach(ingredient =>{ %>
+              <li><%= ingredient.split(',')[0] %> <%= ingredient.split(',')[1] %></li>
+              <img src="https://www.themealdb.com/images/ingredients/<%= ingredient.split(',')[1] %>.png">
+                <% }); %>
+            </ul>
+        
           <p>Instructions: </p>
           <p><%= item.instructions %></p>
 
