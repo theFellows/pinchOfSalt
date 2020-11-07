@@ -77,7 +77,6 @@ function getDataFromApi(request, response) {
         let result = data.body.meals.map(element => {
             return new Recipes(element)
         });
-        // console.log(result)
         response.render('pages/searches/show', {
             recipesDetails: result
         });
@@ -111,15 +110,25 @@ function handleError() {
 
 //helper functions
 function getIngrArr(data) {
-    let ingredients = [];
+    let ingredientsPicture = [];
+    let ingredientsMeasure = [];
     for (let i = 0; i < 20; i++) {
-        ingredients[i] = `${data[`strMeasure${i + 1}`]} ${data[`strIngredient${i + 1}`]}`;
+        ingredientsPicture[i] = `${data[`strIngredient${i + 1}`]}`;
+        ingredientsMeasure[i] = `${data[`strMeasure${i + 1}`]}`;
     }
-    let newIngredients = ingredients.filter(value => {
+    let newIngredients = ingredientsPicture.filter(value => {
         if (value != '  ' && value != 'null null' && value != ' ') {
             return (value);
         }
     })
-    return (newIngredients);
+    let newIngredientsMeasure = ingredientsMeasure.filter(value => {
+        if (value != '  ' && value != 'null null' && value != ' ') {
+            return (value);
+        }
+    })
+    return ({
+        ingredientsPicture : newIngredients,
+        ingredientsMeasure : newIngredientsMeasure
+    });
 }
 
