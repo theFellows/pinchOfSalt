@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/recipes/<%= recipesList.id %>?_method=PUT" method="POST">
+        <input class="edit" type="text" value="<%=recipesList.name%>" name="name"></input>
+        <br>
+        <input class="edit" type="text" value="<%=recipesList.image_url%>" name="image_url"></input>
+        <br>
+        <input class="edit" type="text" value="<%=recipesList.category%>" name="category"></input>
+        <br>
+        <textarea id="textarea" class="edit" name="instructions"><%=recipesList.instructions%></textarea>
+        <br>
+        <input class="edit" type="text" value="<%=recipesList.area%>" name="area"></input>
+        <br>
+        <input class="edit" type="text" value="<%=recipesList.ingredients%>" name="ingredients"></input>
+        <br>
+        <input class="edit" type="text" value="<%=recipesList.video_url%>" name="video_url"></input>
+
+        <button type="submit">Update Recipe</button>
+
+    </form>
+</body>
+</html>
