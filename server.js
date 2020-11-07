@@ -25,18 +25,27 @@ app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
-app.get('/details/:id',getById)
-function getById(request,response){
+app.get('/details/:id', getById);
+app.get('/recipes', getRecipes);
+app.get('/recipes/add', addRecipes);
+app.post('/recipes', addRecipe);
+app.get('/recipes/:id', getDetails);
+app.post('/recipes/:id', ReadRecipe);
+app.put('/recipes/:id', updateDetails);
+app.delete('/recipes/:id', deleteRecipe);
+
+
+function getById(request, response) {
     let id = request.params.id;
     let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     superagent.get(urlById).then(data => {
         let result = data.body.meals.map(element => {
-            return new RecipeDetails(element)
+            return new RecipeDetails(element);
         });
         response.render('pages/searches/detail', {
             recipesDetails: result
         });
-    })
+    }).catch(handleError);
 }
 
 
@@ -97,7 +106,7 @@ function getRecipesByArea(request, response) {
     }).catch(handleError);
 }
 
-function getRecipesByCategory(request, response){
+function getRecipesByCategory(request, response) {
     const categoryName = request.params.category_name;
     let url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`;
     superagent.get(url).then(data => {
@@ -112,55 +121,52 @@ function getRecipesByCategory(request, response){
 }
 
 ////////////sondos
-app.get('/recipes', getRecipes)
-function getRecipes(request,response){
+function getRecipes(request, response) {
     const sql = 'SELECT * FROM recipes;';
-    client.query(sql).then(data => response.render('pages/recipes/show', { recipesList: data.rows}))
+    client.query(sql).then(data => response.render('pages/recipes/show', { recipesList: data.rows }));
 }
-app.get('/recipes/:id', getDetails)
+
 function getDetails(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data => response.render('pages/recipes/details', { recipe: data.rows[0]}))
-  }
-  app.post('/recipes/:id', ReadRecipe)
-  function ReadRecipe(request,response){
+    client.query(sql, parameter).then(data => response.render('pages/recipes/details', { recipe: data.rows[0] }))
+}
+
+function ReadRecipe(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
     client.query(sql, parameter).then(data => response.render('pages/recipes/edit', { recipesList: data.rows[0] }))
-  }
-  app.put('/recipes/:id', updateDetails);
-  function updateDetails(request, response) {
-    const { name, image_url, category, instructions, area, ingredients, video_url} = request.body;
+}
+
+function updateDetails(request, response) {
+    const { name, image_url, category, instructions, area, ingredients, video_url } = request.body;
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
-      response.redirect(`/recipes/${parameter[7]}`)
-    });
-  }
-  app.delete('/recipes/:id', deleteRecipe);
-  function deleteRecipe(request,response){
-    const parameter = request.params.id;
-    
-    const sql = 'DELETE FROM recipes WHERE id=$1';
-    client.query(sql, [parameter]).then(()=>{
-      response.redirect('/recipes');
-    });
-  }
-  app.post('/recipes', addRecipe)
-  function addRecipe(request,response){
-    const { name, image_url, category, instructions, area, ingredients, video_url} = request.body;
-    const sql='INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
-    const parameter=[name, category, area, image_url, video_url, ingredients, instructions];
-    client.query(sql,parameter).then((data)=>{
-        response.redirect(`/recipes/${data.rows[0].id}`)
+        response.redirect(`/recipes/${parameter[7]}`)
+    }).catch(handleError);
+}
 
-    }).catch(console.error());
-  }
-  app.get('/add',addRecipes)
-  function addRecipes(request,response){
-      response.render('pages/recipes/add')
-  }
+function deleteRecipe(request, response) {
+    const parameter = request.params.id;
+    const sql = 'DELETE FROM recipes WHERE id=$1';
+    client.query(sql, [parameter]).then(() => {
+        response.redirect('/recipes');
+    }).catch(handleError);
+}
+
+function addRecipe(request, response) {
+    const { name, image_url, category, instructions, area, ingredients, video_url } = request.body;
+    const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
+    const parameter = [name, category, area, image_url, video_url, ingredients, instructions];
+    client.query(sql, parameter).then((data) => {
+        response.redirect(`/recipes/${data.rows[0].id}`)
+    }).catch(handleError);
+}
+
+function addRecipes(request, response) {
+    response.render('pages/recipes/add')
+}
 
 
 function homePage(request, response) {
@@ -200,15 +206,15 @@ function getIngrArr(data) {
         if (value != '  ' && value != 'null null' && value != ' ') {
             return (value);
         }
-    })
+    }).catch(handleError);
     let newIngredientsMeasure = ingredientsMeasure.filter(value => {
         if (value != '  ' && value != 'null null' && value != ' ') {
             return (value);
         }
-    })
+    }).catch(handleError);
     return ({
-        ingredientsPicture : newIngredients,
-        ingredientsMeasure : newIngredientsMeasure
+        ingredientsPicture: newIngredients,
+        ingredientsMeasure: newIngredientsMeasure
     });
 }
 
