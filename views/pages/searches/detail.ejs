@@ -24,9 +24,13 @@
 
           <p>Ingredients: </p>
           <ul>
-            <% item.ingredients.forEach(ingredient =>{ %>
-            <li><%= ingredient %></li>
+     <% item.ingredients.ingredientsPicture.forEach(ingredient =>{ %>
+      <li><%= ingredient %></li>
+            <img src="https://www.themealdb.com/images/ingredients/<%= ingredient %>.png">
               <% }); %>
+              <% item.ingredients.ingredientsMeasure.forEach(ingredient =>{ %>
+                <li><%= ingredient %></li>
+                  <% }); %>
           </ul>
           <p>Instructions: </p>
           <p><%= item.instructions %></p>
@@ -35,6 +39,7 @@
           <br />
       </section>
       <% }); %>
+
     </ul>
   </main>
 </body>
