@@ -4,9 +4,10 @@
 <head>
   <%- include('../layouts/head.ejs') %>
   <title></title>
+  <link rel="stylesheet" href="/views/pages/recipes/details.ejs">
 </head>
 
-<body>
+<body id="recipe-detail-body">
   <header>
     <%- include('../layouts/header.ejs')%>
   </header>
@@ -14,29 +15,43 @@
     <ul>
       <% recipesDetails.forEach(item=>{ %>
       <section class="resultDetails">
-        <img src="<%= item.image_url %>" />
-
-        <h2><%= item.name %></h2>
-
-        <h4>Category: <%= item.category %></h3>
-
-          <p>Origin: <%= item.area %></p>
-
-          <p>Ingredients: </p>       
-            <ul>
-              <% item.ingredients.forEach(ingredient =>{ %>
-              <li><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %></li>
-              <img src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
-                <% }); %>
-            </ul>
         
-          <p>Instructions: </p>
-          <p><%= item.instructions %></p>
-          <iframe src="<%= item.video_url %>"></iframe>
-          <br />
-          <form action="/bookmarks/<%= item.id %>" method="POST">
-          <button type="submit">Bookmark Recipe</button>
-        </form>
+
+        <div id="container">
+          <div id="container1">
+            <h2 id="recipe-detail-title"><%= item.name %></h2> <br>
+        <h4 id="recipe-detail-category"><b>Category:</b>  <%= item.category %></h3>
+          
+          <p id="recipe-detail-origin"><b>Origin:</b>  <%= item.area %></p>
+            
+            <form id="recipe-form" action="/bookmarks/<%= item.id %>" method="POST">
+              <button id="recipe-button" type="submit" ><i class="fa fa-shopping-basket"></i>Bookmark Recipe</button>
+
+            </form>
+          </div>
+          <div id="container2"><img id="recipe-detail-image" src="<%= item.image_url %>" />
+          </div>
+
+       </div>
+        
+        
+          <p id="recipe-ingredient"> <b>Ingredients:</b></p>
+          <div id="recipe-instructions">       
+            <ol id="recipe-list-image">
+              <% item.ingredients.forEach(ingredient =>{ %>
+              <li  id="recipe-list"><input type="checkbox"><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %>:</li>
+              <img id="ingredient-image" src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
+                <% }); %>
+            </ol>
+        
+          
+            <iframe src="<%= item.video_url %>"></iframe>
+           <p id="recipe-instruction"><b>Instructions:</b>  <br><b><%= item.instructions %></b></p>
+          </div>
+          
+          
+         
+          
       
 
       </section>
