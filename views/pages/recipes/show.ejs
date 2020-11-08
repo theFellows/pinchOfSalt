@@ -1,13 +1,10 @@
 <!-- cookbook -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My CookBook</title>
-    <link rel="stylesheet" href="/css/base.css">
-</head>
+    <%- include ('../layouts/head') %>
 <body>
+    <%- include ('../layouts/header') %>
+<main>
     <p class="elementsCount">Number of recipes in your cookbook: <%= recipesList.length %></p>
 <section>
     <% recipesList.forEach(recipe => { %>
@@ -23,6 +20,8 @@
     </form>
 
 </section>
+</main>
+
 <script>
     if(localStorage.getItem('token') == undefined) {
     window.location.replace("/registerForm")
