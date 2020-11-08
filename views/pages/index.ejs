@@ -2,34 +2,38 @@
 <html lang="en">
 <%- include ('layouts/head') %>
 
-<body>
+<body id='body'>
     <%- include ('layouts/header') %>
     
     <main>
         <section id="searchFormSection">
-            <form action="/searches" method="POST">
-                <input type="text" name="search">
-                <select name="sort">
-                    <option value="name">Name</option>
-                    <option value="category">Category</option>
-                    <option value="area">Origin</option>
-                </select>
-                <input type="submit" value="submit">
+            <form class="searchForm" action="/searches" method="POST" style="margin:auto;max-width:500px">
+                <input id="searchBar" type="text" name="search" placeholder="Search Recipes">
+                <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
+                    <select class="select-css" name="sort">
+                        <option selected disabled>Search by</option>
+                        <option value="name">Name</option>
+                        <option value="category">Category</option>
+                        <option value="area">Origin</option>
+                    </select>
             </form>
         </section>
 
         <section id="randomSection">
             <% recipesRandomly.forEach(item=>{ %>
             <section class="resultDetails">
-                 <form action="/d<%= item.id %>">
-                     <img src="<%= item.image_url %>" />
-                      <h2><%= item.name %></h2>
-                      <input type="submit" value="show details">
-                    </form>
-                      <br />
-                    </section>
-                    <% }); %>
+                <form action="/d<%= item.id %>">
+                    <img src="<%= item.image_url %>" />
+                    <h2><%= item.name %></h2>
+                    <input type="submit" value="show details">
+                </form>
+                <br />
             </section>
+            <% }); %>
+        </section>
+</main>
+        <%- include ('layouts/footer') %>
+
 </body>
 
 </html>

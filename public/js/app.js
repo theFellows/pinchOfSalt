@@ -15,8 +15,6 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 
-       
-
 $(document).ready(function() {
 var max_fields      = 30; //maximum input boxes allowed
 var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
