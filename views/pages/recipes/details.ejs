@@ -28,8 +28,11 @@
         <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="POST">
             <input type="submit" value="Delete Recipe">
         </form>
-    </main>
-    <%- include ('../layouts/footer') %>
-
+         </main>
+        <script>
+            if(localStorage.getItem('token') == undefined) {
+            window.location.replace("/registerForm")
+    }
+        </script>
 </body>
 </html>

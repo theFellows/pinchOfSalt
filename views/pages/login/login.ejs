@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<input type="text" name="email" placeholder="Enter your email" id="email">
+<p id="alert_email"></p>
+<input type="password" name="password" placeholder="Enter your password" id="password">
+<p id="alert_password"></p>
+<button onclick="LogIn()">Login</button>
+
+<a href="/registerForm">signUp</a>
+
+<script>
+  
+let Email_LogIn = document.getElementById("email");
+let Pass_LogIn = document.getElementById("password");
+
+let Email_LogIn_p = document.getElementById("alert_email");
+let Pass_LogIn_p = document.getElementById("alert_password");
+
+let header = new Headers();
+header.append("Content-Type","Application/json")
+
+function LogIn() {
+
+    fetch( "http://localhost:3030/login", {
+        method: 'post',
+        headers: header,
+        body: JSON.stringify({
+            email: Email_LogIn.value,
+            password: Pass_LogIn.value
+        })
+    }).then(re => re.json()).then(data => {
+      console.log(data)
+        if(data.status == 200) {
+          Pass_LogIn.style.borderBottomColor = 'green';
+          Email_LogIn.style.borderBottomColor = 'green';
+          Pass_LogIn.value = "";
+          Email_LogIn.value = "";      
+          localStorage.setItem("token" , data.token)
+          window.location.replace("/")
+        }else if(data.status == 400) {
+          Pass_LogIn_p.innerHTML = "your password dosen't exist";
+          Pass_LogIn.style.borderBottomColor = 'red';
+          Pass_LogIn.value = "";
+        }else if(data.status == 404){
+          Email_LogIn_p.innerHTML = "your email wrong or dosen't exist";
+          Email_LogIn.style.borderBottomColor = 'red';
+        }
+    })
+}
+</script>
+</body>
+</html>

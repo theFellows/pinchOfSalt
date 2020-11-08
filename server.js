@@ -4,17 +4,28 @@ const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
 const pg = require('pg');
-const { request, response } = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser')
+const {
+    request,
+    response
+} = require('express');
 require('dotenv').config();
 const methodOverride = require('method-override');
 const app = express();
 app.use(cors());
+app.options('*',cors());
+app.use(bodyParser.json())
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
+const key = process.env.KEY;
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL;
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 const client = new pg.Client(DATABASE_URL);
 let randomRecipes = [];
 client.connect().then(() => {
@@ -37,8 +48,66 @@ app.get('/bookmarks', getBookmarks);
 app.post('/bookmarks/:id', addBookmark);
 app.get('/bookmarks/:id', getBookmarkDetails);
 app.delete('/bookmarks/:id', deleteBookmark);
+app.get('/registerForm' , getFormRegister)
+app.get('/loginForm' , getFormLogin)
+app.post('/register', addInfoUser)
+app.post('/login', getInfoUser)
 
+function getInfoUser(request,response) {
+    let password = request.body.password;
+    let email = request.body.email;
+    let checkPassword = `select password from users where email = $1;`
+    let safeCheck = [email];
+    client.query(checkPassword , safeCheck).then(data=>{
+        if(data.rows.length > 0) {
+        bcrypt.compare(password , data.rows[0].password , (error , CompareDone)=>{
+            if(CompareDone == true) {
+                let tokenLogin = jwt.sign({email : email , password:data.rows[0].password},key)
+                response.send({status : 200 , token : tokenLogin})
+            }else{
+                response.send({ status: 400 });
+                throw error;
+            }
+        })
+        }else{
+            response.send({ status: 404 });
+        }
+    })
+}
 
+function getFormRegister(request,response) {
+    response.render('pages/login/signUp')
+}
+
+function getFormLogin(request,response) {
+    response.render('pages/login/login')
+}
+
+function addInfoUser(request, response) {
+    let name = request.body.name;
+    let email = request.body.email;
+    let password = request.body.password;
+       let sqlCheck = `select * from users where email = $1;`
+       let safeCheck = [email]
+       client.query(sqlCheck,safeCheck).then(data=>{
+           if(data.rows.length >= 1) {
+               response.send({status : 226})
+           }else{
+            bcrypt.hash(password,8,(HashingDidNotWork, HashingPasswordWorked) => {
+                if (HashingDidNotWork) {
+                    response.status(500);
+                 } else {
+        let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
+        let safeValues = [name,email,HashingPasswordWorked];
+        client.query(sql,safeValues).then(()=>{
+            let tokenUser = jwt.sign({name : name , email : email , password : HashingPasswordWorked},key)
+            response.send({status : 201 , token : tokenUser})
+        })
+                }
+            });
+           }
+       })
+}
 
 function getById(request, response) {
     let id = request.params.id;
@@ -53,11 +122,11 @@ function getById(request, response) {
     }).catch(handleError);
 }
 
-
 function getRandomRecipes(request, response) {
     let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
         `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
-        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`]
+        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`
+    ]
 
     for (let i = 0; i < 6; i++) {
         superagent.get(urls[i]).then(data => {
@@ -128,15 +197,20 @@ function getRecipesByCategory(request, response) {
 ////////////sondos
 function getRecipes(request, response) {
     const sql = 'SELECT * FROM recipes;';
-    client.query(sql).then(data => response.render('pages/recipes/show', { recipesList: data.rows }));
+    client.query(sql).then(data => response.render('pages/recipes/show', {
+        recipesList: data.rows
+    }));
 }
 
 function getDetails(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data =>{
+    client.query(sql, parameter).then(data => {
         let ingrArr = stringToArray(data.rows[0].ingredients);
-        response.render('pages/recipes/details', { recipe: data.rows[0], ingrArr })
+        response.render('pages/recipes/details', {
+            recipe: data.rows[0],
+            ingrArr
+        })
     })
 
 }
@@ -144,13 +218,25 @@ function getDetails(request, response) {
 function ReadRecipe(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data =>{
+    client.query(sql, parameter).then(data => {
         let ingrArr = stringToArray(data.rows[0].ingredients);
-        response.render('pages/recipes/edit', { recipesList: data.rows[0],ingrArr })})
+        response.render('pages/recipes/edit', {
+            recipesList: data.rows[0],
+            ingrArr
+        })
+    })
 }
 
 function updateDetails(request, response) {
-    const { name, image_url, category, instructions, area, ingredients, video_url } = request.body;
+    const {
+        name,
+        image_url,
+        category,
+        instructions,
+        area,
+        ingredients,
+        video_url
+    } = request.body;
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
@@ -167,11 +253,20 @@ function deleteRecipe(request, response) {
 }
 
 function addRecipe(request, response) {
-    let ingredients=[]
-    
-    const { name, image_url, category, instructions, area, ingredient, measure, video_url } = request.body;
-    for (let i=0; i<ingredient.length;i++){
-        let str=`${measure[i]}+${ingredient[i]}`;
+    let ingredients = []
+
+    const {
+        name,
+        image_url,
+        category,
+        instructions,
+        area,
+        ingredient,
+        measure,
+        video_url
+    } = request.body;
+    for (let i = 0; i < ingredient.length; i++) {
+        let str = `${measure[i]}+${ingredient[i]}`;
         ingredients.push(str)
     }
     const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
@@ -188,7 +283,9 @@ function addRecipes(request, response) {
 // Bookmarks (Batool)
 function getBookmarks(request, response) {
     const sql = 'SELECT * FROM bookmarks;';
-    client.query(sql).then(data => response.render('pages/bookmarks/show', { bookmarksList: data.rows }));
+    client.query(sql).then(data => response.render('pages/bookmarks/show', {
+        bookmarksList: data.rows
+    }));
 }
 
 function getBookmarkDetails(request, response) {
@@ -196,26 +293,38 @@ function getBookmarkDetails(request, response) {
     const parameter = [request.params.id];
     client.query(sql, parameter).then(data => {
         let ingrArr = stringToArray(data.rows[0].ingredients);
-        response.render('pages/bookmarks/details', { bookmark: data.rows[0], ingrArr })
+        response.render('pages/bookmarks/details', {
+            bookmark: data.rows[0],
+            ingrArr
+        })
     })
 }
 
 function addBookmark(request, response) {
     let id = request.params.id;
-  console.log(typeof(id))
-        
-    let sqlStatement='SELECT * FROM bookmarks WHERE id=$1;'
+    console.log(typeof (id))
+
+    let sqlStatement = 'SELECT * FROM bookmarks WHERE id=$1;'
     const parameter = [request.params.id];
-    client.query(sqlStatement,parameter).then(data=>{
-        if(data.rows.length>0){
+    client.query(sqlStatement, parameter).then(data => {
+        if (data.rows.length > 0) {
             response.redirect(`/d${id}`)
-        }else{
+        } else {
             let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
             superagent.get(urlById).then(data => {
                 let result = data.body.meals.map(element => {
                     return new RecipeDetails(element);
                 });
-                const { id, name, category, area, image_url, video_url, instructions, ingredients } = result[0];
+                const {
+                    id,
+                    name,
+                    category,
+                    area,
+                    image_url,
+                    video_url,
+                    instructions,
+                    ingredients
+                } = result[0];
                 const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
                 const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions];
                 client.query(sql, parameter).then((data) => {
@@ -224,7 +333,7 @@ function addBookmark(request, response) {
             }).catch(handleError);
         }
     })
-   
+
 }
 
 function deleteBookmark(request, response) {
@@ -282,6 +391,8 @@ function stringToArray(str) {
     let arr = str.map(value => {
         value = value.replace("\"", "");
         return (value.replace("\"", ""));
-      })
-    return(arr);
+    })
+    return (arr);
 }
+
+// ------------------------------------------------------------ 
