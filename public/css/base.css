@@ -3,7 +3,12 @@
 body{
     color: red;
     font-family: 'Lora', serif;
+    background-image: url('/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
+
 
 img{
     width: 300px;
