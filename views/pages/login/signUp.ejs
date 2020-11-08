@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SignUp</title>
+</head>
+<body>
+
+<input type="text" name="name" placeholder="Enter your name" id="name">
+<p id="name-p"></p>
+<input type="text" name="email" placeholder="Enter you email" id="email">
+<p id="email-p"></p>
+<input type="password" name="password" placeholder="Enter your password" id="password">
+<p id="pass-p"></p>
+
+<button onclick="register()">Sign up</button>
+
+<a href="/loginForm">login</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+let email = document.getElementById('email');
+let name = document.getElementById('name');
+let pass = document.getElementById('password');
+let email_p = document.getElementById('email-p');
+let name_p = document.getElementById('name-p');
+let pass_p = document.getElementById('pass-p');
+
+let header = new Headers();
+header.append("Content-Type","Application/json")
+function register(){
+  
+  fetch("http://localhost:3030/register",{
+    method:"POST",
+    headers:header,
+    body:JSON.stringify({
+      email:email.value,
+      password:pass.value,
+      name:name.value
+    })
+  }).then(re=>
+    re.json()
+  ).then(data=>{
+      if(data.status == 226) {
+        email_p.innerHTML = "your Email is Exists";
+        email_p.style.border="2px solid red";
+      }else{
+        email_p.innerHTML = "";
+        localStorage.setItem("token",data.token)   
+        window.location.replace("/")
+      }
+  })
+}
+
+</script>
+</body>
+</html>

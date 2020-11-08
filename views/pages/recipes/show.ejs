@@ -21,7 +21,11 @@
 
 </section>
 </main>
-<%- include ('../layouts/footer') %>
 
+<script>
+    if(localStorage.getItem('token') == undefined) {
+    window.location.replace("/registerForm")
+}
+</script>
 </body>
 </html>
