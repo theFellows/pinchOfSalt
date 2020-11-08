@@ -23,5 +23,10 @@
     </form>
 
 </section>
+<script>
+    if(localStorage.getItem('token') == undefined) {
+    window.location.replace("/registerForm")
+}
+</script>
 </body>
 </html>
