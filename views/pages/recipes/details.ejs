@@ -1,13 +1,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Details</title>
-    <link rel="stylesheet" href="/css/base.css">
-</head>
+    <%- include ('../layouts/head') %>
+
 <body>
+    <%- include ('../layouts/header') %>
+    <main>
         <section>
             <section class="recipe-template">
                 <p><br><%= recipe.name %></p><br><br>
@@ -30,5 +28,8 @@
         <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="POST">
             <input type="submit" value="Delete Recipe">
         </form>
+    </main>
+    <%- include ('../layouts/footer') %>
+
 </body>
 </html>
