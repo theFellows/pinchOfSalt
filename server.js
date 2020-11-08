@@ -134,13 +134,19 @@ function getRecipes(request, response) {
 function getDetails(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data => response.render('pages/recipes/details', { recipe: data.rows[0] }))
+    client.query(sql, parameter).then(data =>{
+        let ingrArr = stringToArray(data.rows[0].ingredients);
+        response.render('pages/recipes/details', { recipe: data.rows[0], ingrArr })
+    })
+
 }
 
 function ReadRecipe(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
     const parameter = [request.params.id];
-    client.query(sql, parameter).then(data => response.render('pages/recipes/edit', { recipesList: data.rows[0] }))
+    client.query(sql, parameter).then(data =>{
+        let ingrArr = stringToArray(data.rows[0].ingredients);
+        response.render('pages/recipes/edit', { recipesList: data.rows[0],ingrArr })})
 }
 
 function updateDetails(request, response) {
@@ -168,7 +174,6 @@ function addRecipe(request, response) {
         let str=`${measure[i]}+${ingredient[i]}`;
         ingredients.push(str)
     }
-    console.log(ingredients);
     const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions];
     client.query(sql, parameter).then((data) => {
@@ -197,18 +202,29 @@ function getBookmarkDetails(request, response) {
 
 function addBookmark(request, response) {
     let id = request.params.id;
-    let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-    superagent.get(urlById).then(data => {
-        let result = data.body.meals.map(element => {
-            return new RecipeDetails(element);
-        });
-        const { id, name, category, area, image_url, video_url, instructions, ingredients } = result[0];
-        const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
-        const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions];
-        client.query(sql, parameter).then((data) => {
+  console.log(typeof(id))
+        
+    let sqlStatement='SELECT * FROM bookmarks WHERE id=$1;'
+    const parameter = [request.params.id];
+    client.query(sqlStatement,parameter).then(data=>{
+        if(data.rows.length>0){
             response.redirect(`/d${id}`)
-        }).catch(handleError);
-    }).catch(handleError);
+        }else{
+            let urlById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+            superagent.get(urlById).then(data => {
+                let result = data.body.meals.map(element => {
+                    return new RecipeDetails(element);
+                });
+                const { id, name, category, area, image_url, video_url, instructions, ingredients } = result[0];
+                const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
+                const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions];
+                client.query(sql, parameter).then((data) => {
+                    response.redirect(`/d${id}`)
+                }).catch(handleError);
+            }).catch(handleError);
+        }
+    })
+   
 }
 
 function deleteBookmark(request, response) {

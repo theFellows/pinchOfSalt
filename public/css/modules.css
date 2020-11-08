@@ -8,3 +8,19 @@
 main{
     padding-left: 250px;
 }
+
+.resultView {
+    display: flex;
+    flex-flow: column wrap;
+    float: left;
+    margin: 15px;
+    font-family: 'Roboto', sans-serif;
+    
+}
+.resultView img{
+    border-radius: 5px;
+}
+.resultView h2{
+    font-weight: bolder;
+    color: rgb(0, 0, 0);
+}

@@ -1,28 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/recipes/<%= recipesList.id %>?_method=PUT" method="POST">
-        <input class="edit" type="text" value="<%=recipesList.name%>" name="name"></input>
-        <br>
-        <input class="edit" type="text" value="<%=recipesList.image_url%>" name="image_url"></input>
-        <br>
-        <input class="edit" type="text" value="<%=recipesList.category%>" name="category"></input>
-        <br>
-        <textarea id="textarea" class="edit" name="instructions"><%=recipesList.instructions%></textarea>
-        <br>
-        <input class="edit" type="text" value="<%=recipesList.area%>" name="area"></input>
-        <br>
-        <input class="edit" type="text" value="<%=recipesList.ingredients%>" name="ingredients"></input>
-        <br>
-        <input class="edit" type="text" value="<%=recipesList.video_url%>" name="video_url"></input>
+    <%- include ('../layouts/head') %>
 
-        <button type="submit">Update Recipe</button>
-
+<body class="formBody">
+    <%- include ('../layouts/header') %>
+<main id="main">
+   
+    <br>
+    <form action="/recipes/<%= recipesList.id %>?_method=PUT" method="POST"></form>
+    <h2>Update Your Recipe</h2><br><br>
+    <label for="name">Recipe Name</label>
+    <br>
+    <input class="edit" type="text" value="<%=recipesList.name%>" name="name"></input>
+    <br><br>
+    <label for="image_url">Enter an Image</label>
+    <br>
+    <input class="edit" type="text" value="<%=recipesList.image_url%>" name="image_url"></input>
+    <br><br>
+    <label for="category">Category</label>
+    <br>
+    <input class="edit" type="text" value="<%=recipesList.category%>" name="category"></input>
+    <br><br>
+    <label for="instructions">Instructions</label>
+    <br>
+    <textarea id="textarea" class="edit" name="instructions"><%=recipesList.instructions%></textarea>
+    <br><br>
+    <label for="area">Area</label>
+    <br>
+    <input class="edit" type="text" value="<%=recipesList.area%>" name="area"></input>
+    <br><br>
+    <p class="add_field_button">Add Another Ingredient</p>
+    <br><br>
+    <section class="input_fields_wrap">
+        
+            <% ingrArr.forEach(ingredient =>{ %>
+                <div>
+                <label for="ingredient">Ingredient</label>
+        <br>
+        <input class="edit" type="text" value="<%= ingredient.split('+')[1] %>" name="ingredient"></input>
+        <br><br>
+        <label for="measure">Measure</label>
+        <br>
+        <input class="edit" type="text" value="<%= ingredient.split('+')[0] %>" name="measure"></input>
+        <br><a href="#" class="remove_field">Remove</a> <br>
+        <br>
+    </div>
+              <% }); %>
+     
+    </section>
+    <br>
+    <label for="video_url">video_url</label>
+    <br>
+    <input class="edit" type="text" value="<%=recipesList.video_url%>" name="video_url"></input>
+    <br><br>
+    <button type="submit">Update Recipe</button>
     </form>
+</main>
+<%- include ('../layouts/footer') %>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
