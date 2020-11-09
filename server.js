@@ -15,7 +15,7 @@ require('dotenv').config();
 const methodOverride = require('method-override');
 const app = express();
 app.use(cors());
-app.options('*',cors());
+app.options('*', cors());
 app.use(bodyParser.json())
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
@@ -48,37 +48,37 @@ app.get('/bookmarks', getBookmarks);
 app.post('/bookmarks/:id', addBookmark);
 app.get('/bookmarks/:id', getBookmarkDetails);
 app.delete('/bookmarks/:id', deleteBookmark);
-app.get('/registerForm' , getFormRegister)
-app.get('/loginForm' , getFormLogin)
+app.get('/registerForm', getFormRegister)
+app.get('/loginForm', getFormLogin)
 app.post('/register', addInfoUser)
 app.post('/login', getInfoUser)
 
-function getInfoUser(request,response) {
+function getInfoUser(request, response) {
     let password = request.body.password;
     let email = request.body.email;
     let checkPassword = `select id,password from users where email = $1;`
     let safeCheck = [email];
-    client.query(checkPassword , safeCheck).then(data=>{
-        if(data.rows.length > 0) {
-        bcrypt.compare(password , data.rows[0].password , (error , CompareDone)=>{
-            if(CompareDone == true) {
-                let tokenLogin = jwt.sign({email : email , password:data.rows[0].password},key)
-                response.send({status : 200 , token : tokenLogin , id : data.rows[0].id})
-            }else{
-                response.send({ status: 400 });
-            }
-        })
-        }else{
+    client.query(checkPassword, safeCheck).then(data => {
+        if (data.rows.length > 0) {
+            bcrypt.compare(password, data.rows[0].password, (error, CompareDone) => {
+                if (CompareDone == true) {
+                    let tokenLogin = jwt.sign({ email: email, password: data.rows[0].password }, key)
+                    response.send({ status: 200, token: tokenLogin, id: data.rows[0].id })
+                } else {
+                    response.send({ status: 400 });
+                }
+            })
+        } else {
             response.send({ status: 404 });
         }
     })
 }
 
-function getFormRegister(request,response) {
+function getFormRegister(request, response) {
     response.render('pages/login/signUp')
 }
 
-function getFormLogin(request,response) {
+function getFormLogin(request, response) {
     response.render('pages/login/login')
 }
 
@@ -86,32 +86,32 @@ function addInfoUser(request, response) {
     let name = request.body.name;
     let email = request.body.email;
     let password = request.body.password;
-       let sqlCheck = `select * from users where email = $1;`
-       let safeCheck = [email]
-       client.query(sqlCheck,safeCheck).then(data=>{
-           if(data.rows.length >= 1) {
-               response.send({status : 226})
-           }else{
-            bcrypt.hash(password,8,(HashingDidNotWork, HashingPasswordWorked) => {
+    let sqlCheck = `select * from users where email = $1;`
+    let safeCheck = [email]
+    client.query(sqlCheck, safeCheck).then(data => {
+        if (data.rows.length >= 1) {
+            response.send({ status: 226 })
+        } else {
+            bcrypt.hash(password, 8, (HashingDidNotWork, HashingPasswordWorked) => {
                 if (HashingDidNotWork) {
                     response.status(500);
-                 } else {
-        let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
-        let safeValues = [name,email,HashingPasswordWorked];
-        client.query(sql,safeValues).then(()=>{
-            let sqlId = `select * from users where email = $1`
-            let safeId = [email]
-       client.query(sqlId,safeId).then(data=>{
-           let id = data.rows[0].id
-        let tokenUser = jwt.sign({name : name , email : email , password : HashingPasswordWorked},key)
-        response.send({status : 201 , token : tokenUser , id : id})
-       })
-            
-        })
+                } else {
+                    let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
+                    let safeValues = [name, email, HashingPasswordWorked];
+                    client.query(sql, safeValues).then(() => {
+                        let sqlId = `select * from users where email = $1`
+                        let safeId = [email]
+                        client.query(sqlId, safeId).then(data => {
+                            let id = data.rows[0].id
+                            let tokenUser = jwt.sign({ name: name, email: email, password: HashingPasswordWorked }, key)
+                            response.send({ status: 201, token: tokenUser, id: id })
+                        })
+
+                    })
                 }
             });
-           }
-       })
+        }
+    })
 }
 
 function getById(request, response) {
@@ -232,15 +232,23 @@ function ReadRecipe(request, response) {
 }
 
 function updateDetails(request, response) {
+    let ingredients = []
+
+    console.log(request.body);
     const {
         name,
-        image_url,
+        area,
         category,
         instructions,
-        area,
-        ingredients,
-        video_url
+        image_url,
+        video_url,
+        measure,
+        ingredient
     } = request.body;
+    for (let i = 0; i < ingredient.length; i++) {
+        let str = `${measure[i]}+${ingredient[i]}`;
+        ingredients.push(str)
+    }
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
@@ -261,13 +269,13 @@ function addRecipe(request, response) {
 
     const {
         name,
-        image_url,
+        area,
         category,
         instructions,
-        area,
-        ingredient,
+        image_url,
+        video_url,
         measure,
-        video_url
+        ingredient
     } = request.body;
     for (let i = 0; i < ingredient.length; i++) {
         let str = `${measure[i]}+${ingredient[i]}`;
@@ -355,7 +363,7 @@ function homePage(request, response) {
 
 function Recipes(data) {
     this.id = data.idMeal || 'No ID Available';
-    this.name = data.strMeal.substring(0,28) || 'No Name Available';
+    this.name = data.strMeal.substring(0, 28) || 'No Name Available';
     this.image_url = data.strMealThumb || 'No Image Available';
 }
 
