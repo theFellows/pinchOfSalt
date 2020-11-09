@@ -34,24 +34,50 @@ client.connect().then(() => {
 
 app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
+//-----------------------------------------------
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
 app.get('/d:id', getById);
-app.get('/recipes', getRecipes);
+//------------------------------------------------
+app.get('/recipe/:id_user', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
 app.get('/recipes/:id', getDetails);
 app.post('/recipes/:id', ReadRecipe);
 app.put('/recipes/:id', updateDetails);
 app.delete('/recipes/:id', deleteRecipe);
-app.get('/bookmarks', getBookmarks);
+//-------------------------------------------------------
+app.get('/bookmark/:id_user', getBookmarks);
 app.post('/bookmarks/:id', addBookmark);
 app.get('/bookmarks/:id', getBookmarkDetails);
 app.delete('/bookmarks/:id', deleteBookmark);
+//--------------------------------------------------
 app.get('/registerForm' , getFormRegister)
 app.get('/loginForm' , getFormLogin)
 app.post('/register', addInfoUser)
 app.post('/login', getInfoUser)
+
+function getBookmarks(request, response) {
+    let id = request.params.id_user;
+    console.log(`id from get ${id}`)
+    const sql = 'select * from bookmarks where id_user = $1;';
+    // console.log(id)
+    let safeUser = [id]
+    client.query(sql,safeUser).then(data => response.render('pages/bookmarks/show', {
+        bookmarksList: data.rows
+    }));
+}
+
+function getRecipes(request , response) {
+    let id = request.params.id_user;
+    let sql = `select * from recipes where id_user = $1;`
+    // console.log(id)
+    let safeUser = [id]
+    client.query(sql,safeUser).then(data => response.render('pages/recipes/show', {
+        recipesList: data.rows
+    }));
+}
+
 
 function getInfoUser(request,response) {
     let password = request.body.password;
@@ -200,12 +226,6 @@ function getRecipesByCategory(request, response) {
 }
 
 ////////////sondos
-function getRecipes(request, response) {
-    const sql = 'SELECT * FROM recipes;';
-    client.query(sql).then(data => response.render('pages/recipes/show', {
-        recipesList: data.rows
-    }));
-}
 
 function getDetails(request, response) {
     const sql = 'SELECT * FROM recipes WHERE id=$1;';
@@ -232,15 +252,23 @@ function ReadRecipe(request, response) {
 }
 
 function updateDetails(request, response) {
+    let ingredients = []
+
+    console.log(request.body);
     const {
         name,
-        image_url,
+        area,
         category,
         instructions,
-        area,
-        ingredients,
-        video_url
+        image_url,
+        video_url,
+        measure,
+        ingredient
     } = request.body;
+    for (let i = 0; i < ingredient.length; i++) {
+        let str = `${measure[i]}+${ingredient[i]}`;
+        ingredients.push(str)
+    }
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
@@ -250,9 +278,10 @@ function updateDetails(request, response) {
 
 function deleteRecipe(request, response) {
     const parameter = request.params.id;
+    let id_user = request.body.id_user;
     const sql = 'DELETE FROM recipes WHERE id=$1';
     client.query(sql, [parameter]).then(() => {
-        response.redirect('/recipes');
+        response.redirect(`/recipe/${id_user}`);
     }).catch(handleError);
 }
 
@@ -267,14 +296,16 @@ function addRecipe(request, response) {
         area,
         ingredient,
         measure,
-        video_url
+        video_url,
+        id_user
     } = request.body;
+    // console.log(id_user)
     for (let i = 0; i < ingredient.length; i++) {
         let str = `${measure[i]}+${ingredient[i]}`;
         ingredients.push(str)
     }
-    const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;'
-    const parameter = [name, category, area, image_url, video_url, ingredients, instructions];
+    const sql = 'INSERT INTO recipes (name, category, area, image_url, video_url, ingredients, instructions,id_user) VALUES ($1, $2, $3, $4, $5, $6, $7 ,$8) RETURNING *;'
+    const parameter = [name, category, area, image_url, video_url, ingredients, instructions,id_user];
     client.query(sql, parameter).then((data) => {
         response.redirect(`/recipes/${data.rows[0].id}`)
     }).catch(handleError);
@@ -285,12 +316,6 @@ function addRecipes(request, response) {
 }
 
 // Bookmarks (Batool)
-function getBookmarks(request, response) {
-    const sql = 'SELECT * FROM bookmarks;';
-    client.query(sql).then(data => response.render('pages/bookmarks/show', {
-        bookmarksList: data.rows
-    }));
-}
 
 function getBookmarkDetails(request, response) {
     const sql = 'SELECT * FROM bookmarks WHERE id=$1;';
@@ -306,7 +331,8 @@ function getBookmarkDetails(request, response) {
 
 function addBookmark(request, response) {
     let id = request.params.id;
-    console.log(typeof (id))
+    let id_user = request.body.id_user;
+    // console.log(typeof (id))
 
     let sqlStatement = 'SELECT * FROM bookmarks WHERE id=$1;'
     const parameter = [request.params.id];
@@ -329,8 +355,9 @@ function addBookmark(request, response) {
                     instructions,
                     ingredients
                 } = result[0];
-                const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
-                const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions];
+                console.log(`id from post ${id_user}`)
+                const sql = 'INSERT INTO bookmarks (id, name, category, area, image_url, video_url, ingredients, instructions , id_user) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9) RETURNING *;'
+                const parameter = [id, name, category, area, image_url, video_url, ingredients, instructions ,id_user];
                 client.query(sql, parameter).then((data) => {
                     response.redirect(`/d${id}`)
                 }).catch(handleError);
@@ -342,9 +369,10 @@ function addBookmark(request, response) {
 
 function deleteBookmark(request, response) {
     const parameter = request.params.id;
+    let id_user = request.body.id_user;
     const sql = 'DELETE FROM bookmarks WHERE id=$1';
     client.query(sql, [parameter]).then(() => {
-        response.redirect('/bookmarks');
+        response.redirect(`/bookmark/${id_user}`);
     }).catch(handleError);
 }
 

@@ -8,5 +8,6 @@ CREATE TABLE bookmarks(
     image_url TEXT,
     video_url TEXT,
     ingredients TEXT,
-    instructions TEXT
+    instructions TEXT,
+    id_user TEXT
 );

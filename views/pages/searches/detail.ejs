@@ -35,16 +35,17 @@
           <iframe src="<%= item.video_url %>"></iframe>
           <br />
           <form action="/bookmarks/<%= item.id %>" method="POST">
+            <input type="hidden" id="id_user" name="id_user">
           <button type="submit">Bookmark Recipe</button>
         </form>
-      
-
       </section>
       <% }); %>
-
     </ul>
   </main>
 
+  <script>
+    document.getElementById('id_user').value = localStorage.getItem('id')
+  </script>
 </body>
 
 </html>

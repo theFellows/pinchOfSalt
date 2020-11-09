@@ -28,12 +28,16 @@
         </section>
     </section>
     <form action="/bookmarks/<%= bookmark.id %>?_method=DELETE" method="POST">
+        <input type="hidden" id="id_user" name="id_user">
         <input type="submit" value="Delete Bookmark">
     </form>
     <script>
         if(localStorage.getItem('token') == undefined) {
         window.location.replace("/registerForm")
 }
+
+    document.getElementById('id_user').value = localStorage.getItem('id')
+  
     </script>
 </body>
 
