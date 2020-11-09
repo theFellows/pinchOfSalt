@@ -19,3 +19,4 @@ CREATE TABLE users(
     password TEXT,
     image_url TEXT
 );
+

@@ -37,7 +37,7 @@ app.post('/searches', getDataFromApi);
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
 app.get('/d:id', getById);
-app.get('/recipes', getRecipes);
+app.get('/recipes/:id', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
 app.get('/recipes/:id', getDetails);
@@ -56,17 +56,16 @@ app.post('/login', getInfoUser)
 function getInfoUser(request,response) {
     let password = request.body.password;
     let email = request.body.email;
-    let checkPassword = `select password from users where email = $1;`
+    let checkPassword = `select id,password from users where email = $1;`
     let safeCheck = [email];
     client.query(checkPassword , safeCheck).then(data=>{
         if(data.rows.length > 0) {
         bcrypt.compare(password , data.rows[0].password , (error , CompareDone)=>{
             if(CompareDone == true) {
                 let tokenLogin = jwt.sign({email : email , password:data.rows[0].password},key)
-                response.send({status : 200 , token : tokenLogin})
+                response.send({status : 200 , token : tokenLogin , id : data.rows[0].id})
             }else{
                 response.send({ status: 400 });
-                throw error;
             }
         })
         }else{
@@ -100,8 +99,14 @@ function addInfoUser(request, response) {
         let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
         let safeValues = [name,email,HashingPasswordWorked];
         client.query(sql,safeValues).then(()=>{
-            let tokenUser = jwt.sign({name : name , email : email , password : HashingPasswordWorked},key)
-            response.send({status : 201 , token : tokenUser})
+            let sqlId = `select * from users where email = $1`
+            let safeId = [email]
+       client.query(sqlId,safeId).then(data=>{
+           let id = data.rows[0].id
+        let tokenUser = jwt.sign({name : name , email : email , password : HashingPasswordWorked},key)
+        response.send({status : 201 , token : tokenUser , id : id})
+       })
+            
         })
                 }
             });
@@ -196,8 +201,9 @@ function getRecipesByCategory(request, response) {
 
 ////////////sondos
 function getRecipes(request, response) {
-    const sql = 'SELECT * FROM recipes;';
-    client.query(sql).then(data => response.render('pages/recipes/show', {
+    const sql = 'SELECT * FROM recipes where id = $1;';
+    const parameter = [request.params.id];
+    client.query(sql,parameter).then(data => response.render('pages/recipes/show', {
         recipesList: data.rows
     }));
 }
@@ -212,7 +218,6 @@ function getDetails(request, response) {
             ingrArr
         })
     })
-
 }
 
 function ReadRecipe(request, response) {

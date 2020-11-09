@@ -46,6 +46,7 @@ function register(){
       }else{
         email_p.innerHTML = "";
         localStorage.setItem("token",data.token)   
+        localStorage.setItem('id' , data.id)
         window.location.replace("/")
       }
   })
