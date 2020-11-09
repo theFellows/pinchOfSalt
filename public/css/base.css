@@ -23,7 +23,7 @@ img{
 }
 
 input:focus { outline: none; }
-.formBody{
+.lightBg{
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
