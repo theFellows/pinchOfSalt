@@ -8,7 +8,7 @@
    
     <br>
     <form action="/recipes/<%= recipesList.id %>?_method=PUT" method="POST"></form>
-    <h2>Update Your Recipe</h2><br><br>
+    <h2 id="update">Update Your Recipe</h2><br><br>
     <label for="name">Recipe Name</label>
     <br>
     <input class="edit" type="text" value="<%=recipesList.name%>" name="name"></input>
@@ -53,7 +53,7 @@
     <br>
     <input class="edit" type="text" value="<%=recipesList.video_url%>" name="video_url"></input>
     <br><br>
-    <button type="submit">Update Recipe</button>
+    <button id="add-recipe-button" type="submit">Update Recipe</button>
     </form>
 </main>
 <%- include ('../layouts/footer') %>
