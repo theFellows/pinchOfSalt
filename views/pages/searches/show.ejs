@@ -7,13 +7,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class='lightBg'>
   <header>
     <%- include('../layouts/header.ejs')%>
   </header>
   
   <main>
-    <ul>
+    <section id="searchFormSection">
+      <form class="searchForm" action="/searches" method="POST" style="margin:auto;max-width:500px">
+          <input id="searchBar" type="text" name="search" placeholder="Search Recipes">
+          <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
+          <select class="select-css" name="sort">
+              <option selected disabled>Search by</option>
+              <option value="name">Name</option>
+              <option value="category">Category</option>
+              <option value="area">Origin</option>
+          </select>
+      </form>
+  </section>
+    <section id='searchResultSection'>
       <% recipesDetails.forEach(item=>{ %>
         <a href='d<%= item.id %>'>
           <section class="resultView">
@@ -25,7 +37,7 @@
             </div>
         </section></a>
       <% }); %>
-    </ul>
+    </section>
   </main>
 
 </body>
