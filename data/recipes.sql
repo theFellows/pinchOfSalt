@@ -9,14 +9,14 @@ CREATE TABLE recipes(
     image_url TEXT,
     video_url TEXT,
     ingredients TEXT,
-    instructions TEXT
+    instructions TEXT,
+    id_user TEXT
 );
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100),
-    password TEXT,
-    image_url TEXT
+    password TEXT
 );
 

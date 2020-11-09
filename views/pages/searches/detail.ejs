@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,15 +9,12 @@
 </head>
 
 <body class='lightBg'>
-  <header>
-    <%- include('../layouts/header.ejs')%>
-  </header>
+
   <main>
     <ul>
       <% recipesDetails.forEach(item=>{ %>
       <section class="resultDetails">
         
-
         <div id="container">
           <div id="container1">
             <h2 id="recipe-detail-title"><%= item.name %></h2> <br>
@@ -27,13 +23,12 @@
           <p id="recipe-detail-origin"><b>Origin:</b>  <%= item.area %></p>
             
             <form id="recipe-form" action="/bookmarks/<%= item.id %>" method="POST">
+             <input type="hidden" id="id_user" name="id_user">
               <button id="recipe-button" type="submit" ><i class="fa fa-shopping-basket"></i>Bookmark Recipe</button>
-
             </form>
           </div>
           <div id="container2"><img id="recipe-detail-image" src="<%= item.image_url %>" />
           </div>
-
        </div>
         
         
@@ -55,12 +50,14 @@
          
           
       
-
       </section>
       <% }); %>
 
     </ul>
   </main>
+  <script>
+    document.getElementById('id_user').value = localStorage.getItem('id')
+  </script>
 </body>
 
 </html>

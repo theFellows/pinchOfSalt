@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include ('../layouts/head') %>
+
 <body class='lightBg'>
-    <%- include ('../layouts/header') %>
+
 <main>
     <p class="elementsCount">Number of recipes in your cookbook: <%= recipesList.length %></p>
 <section>
@@ -18,7 +19,7 @@
               </div>
           </section></a>
     <% }); %>
-    <form action="recipes/add" method="GET">
+    <form action="/recipes/add" method="GET">
         <button type="submit">Add Recipe</button>
     </form>
 </section>
@@ -28,14 +29,9 @@
     if(localStorage.getItem('token') == undefined) {
     window.location.replace("/registerForm")
 }
-getMyRecipes();
-function getMyRecipes() {
-    fetch('http://localhost:3030/recipes',{
-        method : 'get'
-    }).then(res=>res.json()).then(data=>{
-        console.log(data)
-    })
-}
+
+
+
 </script>
 </body>
 </html>
