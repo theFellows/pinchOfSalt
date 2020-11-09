@@ -5,9 +5,6 @@ body{
     font-family: 'Lora', serif;
 }
 
-
-
-
 img{
     width: 300px;
     height: 300px;
@@ -25,14 +22,17 @@ form h2{
     font-weight: bold;
     color: black;
 }
-form label{
-    font-size: 17px;
-    font-weight: 550;
-}
+
 .edit{
-    width: 45%;
+    /* width: 49%; */
     height: 20px;
     text-align: center;
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #ddd;
+    border-radius: 40px;
+    box-shadow: 2px 2px 20px #ddd;
+    margin-top: 12px;
 }
 #textarea{
     width: 45%;
@@ -40,11 +40,12 @@ form label{
 }
 
 .add_field_button {
+    color: white;
     display: inline-block;
     outline: none;
     cursor: pointer;
-    border: solid 1px #da7c0c;
-    background: #478dad;
+    border: solid 1px #99abae;
+    background: #8f8a8a;
     text-align: center;
     text-decoration: none;
     font: 14px/100% Arial, Helvetica, sans-serif;
@@ -56,12 +57,15 @@ form label{
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    width:20px;
+    height: 20px;
 }
 .add_field_button:hover {
-    background: #f47c20;
-    background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
-    background: -moz-linear-gradient(top,  #f88e11,  #f06015);
+    background: #99abae;
+    background: -webkit-gradient(linear, left top, left bottom, from(#99abae), to(#c1c4c5));
+    background: -moz-linear-gradient(top,  #99abae,  #c1c4c5);
     filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+    color: black;
 }
 .add_field_button:active {
     position: relative;
@@ -81,4 +85,30 @@ margin: auto;
   padding: 50px 0px 50px 0px;
   color: #333;
   box-shadow: 0px 6px 8px rgba(0,0,0,0.5);
+}
+#add-recipe-button{
+    color: white;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border: solid 1px #99abae;
+    background: #d12020;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em; 
+    -moz-border-radius: .5em;
+    border-radius: .3em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+#add-recipe-button:hover {
+    background: #99abae;
+    background: -webkit-gradient(linear, left top, left bottom, from(#99abae), to(#c1c4c5));
+    background: -moz-linear-gradient(top,  #99abae,  #c1c4c5);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+    color: black;
 }
