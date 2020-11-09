@@ -10,44 +10,38 @@
     <br>
     <form action="/recipes" method="POST">
         <h2>Add Your Recipe</h2><br><br>
-        <label for="name">Recipe Name</label>
-        <br>
-        <input class="edit" type="text" value="" name="name"></input>
+        <input class="edit" type="text" value="" name="name" placeholder="Recipe Name"></input>
         <br><br>
-        <label for="image_url">Enter an Image</label>
-        <br>
-        <input class="edit" type="text" placeholder="image_url" name="image_url"></input>
+        
+  
+        <input class="edit" type="text" value="" name="category" placeholder="Category"></input>
         <br><br>
-        <label for="category">Category</label>
-        <br>
-        <input class="edit" type="text" value="" name="category"></input>
+
+        <input class="edit" type="text" value="" name="area" placeholder="Origin"></input>
         <br><br>
+ 
+        
         <label for="instructions">Instructions</label>
         <br>
         <textarea id="textarea" class="edit" name="instructions"></textarea>
         <br><br>
-        <label for="area">Area</label>
-        <br>
-        <input class="edit" type="text" value="" name="area"></input>
+        
+        
         <br><br>
-        <p class="add_field_button">Add Another Ingredient</p>
-        <br><br>
+        <label for="ingredients">Ingredients</label>
+        <p class="add_field_button"><i class="fa fa-plus" style="font-size:24px"></i></p>
         <section class="input_fields_wrap">
-          
-           <div><label for="ingredient">Ingredient</label>
-            <br>
-            <input class="edit" type="text" value="" name="ingredient"></input>
-            <br><br>
-            <label for="measure">Measure</label>
-            <br>
-            <input class="edit" type="text" value="" name="measure"></input>
-            <br><a href="#" class="remove_field">Remove</a><br>
+           <div>
+            <input class="edit" type="text" value="" name="measure" placeholder="2 tps"></input>
+            <input class="edit" type="text" value="" name="ingredient" placeholder="salt"></input>
+            <a href="#" class="remove_field"><i class="fa fa-trash-o" style="font-size:24px"></i></a><br>
         </div> 
         </section>
         <br>
-        <label for="video_url">Enter a Video</label>
-        <br>
-        <input class="edit" type="text" placeholder="video_url" name="video_url"></input>
+
+        <input class="edit" type="text" placeholder="Image URL" name="image_url"></input>
+        <br><br>
+        <input class="edit" type="text" placeholder="Video URL" name="video_url"></input>
         <br>
          <br>
         <button id="add-recipe-button" type="submit">Add Recipe</button>

@@ -365,7 +365,9 @@ function RecipeDetails(data) {
     this.category = data.strCategory;
     this.area = data.strArea;
     this.image_url = data.strMealThumb;
-    this.video_url = data.strYoutube.replace("watch", "embed");
+    let video = data.strYoutube.replace("watch", "embed");
+    this.video_url = video.replace("?v=", "/");
+    console.log(this.video_url)
     this.instructions = data.strInstructions;
     this.ingredients = getIngrArr(data) || [];
 }

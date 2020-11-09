@@ -32,7 +32,7 @@ if(x < max_fields){ //max input box allowed
        <label for="measure">Measure</label>
        <br>
        <input class="edit" type="text" value="" name="measure"></input>
-       <br><a href="#" class="remove_field">Remove</a><br></div><br>`); //add input box
+       <br><a href="#" class="remove_field"><i class="fa fa-trash-o" style="font-size:24px"></i></a><br></div><br>`); //add input box
 }
 });
 
