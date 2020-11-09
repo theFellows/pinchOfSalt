@@ -5,82 +5,69 @@ body{
     font-family: 'Lora', serif;
 }
 
-#hero{
-    color: red;
-    font-family: 'Lora', serif;
-    background-image: url('/back2.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    padding-bottom: 1000px;
-    padding-top: 200px;
-}
-
-
 img{
     width: 300px;
     height: 300px;
 }
 
 input:focus { outline: none; }
-.formBody{
+.lightBg{
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
 
 }
-#main form h2{
+form h2{
     font-size: 35px;
     font-weight: bold;
     color: black;
-    font-family: 'Lora', serif;
+}
+
+#update{
+    font-size: 35px;
+    font-weight: bold;
+    color: black;
 }
 form label{
     font-size: 17px;
     font-weight: 550;
 }
 .edit{
-    width: 49%;
-    height: 20px;
+    width: 50%;
+    height: 40px;
     text-align: center;
-    padding: 10px;
+    border-radius: 20px;
     font-size: 17px;
     border: 1px solid #ddd;
-    border-radius: 40px;
-    box-shadow: 2px 2px 20px #ddd;
-    margin-top: 12px;
+    background: white;
+
 }
 #textarea{
-    width: 49%;
-    height: 140px;
+    width: 50%;
+    height: 150px;
 }
 
+ #ingr{
+    width: 22%;
+  }
+
+  #ingrEdit{
+      width: 25%;
+  }
+
 .add_field_button {
-    color: white;
     display: inline-block;
     outline: none;
     cursor: pointer;
-    border: solid 1px #99abae;
-    background: #8f8a8a;
     text-align: center;
     text-decoration: none;
-    font: 14px/100% Arial, Helvetica, sans-serif;
-    padding: .5em 2em .55em;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
     -webkit-border-radius: .5em; 
     -moz-border-radius: .5em;
     border-radius: .3em;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    color: #085239;
+
 }
-.add_field_button:hover {
-    background: #99abae;
-    background: -webkit-gradient(linear, left top, left bottom, from(#99abae), to(#c1c4c5));
-    background: -moz-linear-gradient(top,  #99abae,  #c1c4c5);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
-    color: black;
-}
+
 .add_field_button:active {
     position: relative;
     top: 1px;
@@ -99,36 +86,4 @@ margin: auto;
   padding: 50px 0px 50px 0px;
   color: #333;
   box-shadow: 0px 6px 8px rgba(0,0,0,0.5);
-}
-#add-recipe-button{
-    color: white;
-    display: inline-block;
-    outline: none;
-    cursor: pointer;
-    border: solid 1px #99abae;
-    background: #d12020;
-    text-align: center;
-    text-decoration: none;
-    font: 14px/100% Arial, Helvetica, sans-serif;
-    padding: .5em 2em .55em;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
-    -webkit-border-radius: .5em; 
-    -moz-border-radius: .5em;
-    border-radius: .3em;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
-}
-#add-recipe-button:hover {
-    background: #99abae;
-    background: -webkit-gradient(linear, left top, left bottom, from(#99abae), to(#c1c4c5));
-    background: -moz-linear-gradient(top,  #99abae,  #c1c4c5);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
-    color: black;
-}
-#update{
-    font-size: 35px;
-    font-weight: bold;
-    color: black;
-    font-family: 'Lora', serif;
 }

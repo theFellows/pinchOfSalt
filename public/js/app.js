@@ -25,14 +25,9 @@ $(add_button).click(function(e){ //on add input button click
 e.preventDefault();
 if(x < max_fields){ //max input box allowed
  x++; //text box increment
- $(wrapper).append(`<br><div><label for="ingredient">Ingredient</label>
-       <br>
-       <input class="edit" type="text" value="" name="ingredient"></input>
-       <br><br>
-       <label for="measure">Measure</label>
-       <br>
-       <input class="edit" type="text" value="" name="measure"></input>
-       <br><a href="#" class="remove_field">Remove</a><br></div><br>`); //add input box
+ $(wrapper).append(`<br><div> <input id="ingr" class="edit" type="text" value="" name="measure" placeholder="1 tps"></input>
+ <input id="ingr" class="edit" type="text" value="" name="ingredient" placeholder="salt"></input>
+ <a href="#" class="remove_field"><i class="fa fa-trash-o" style="font-size:20px;color:#cf1717"></i></a><br>`); //add input box
 }
 });
 

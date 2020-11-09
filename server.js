@@ -15,7 +15,7 @@ const
 // ---------------------------------------------- 
 
 app.use(cors());
-app.options('*',cors());
+app.options('*', cors());
 app.use(bodyParser.json())
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
@@ -116,17 +116,17 @@ function getInfoUser(request,response) {
     let email = request.body.email;
     let checkPassword = `select id,password from users where email = $1;`
     let safeCheck = [email];
-    client.query(checkPassword , safeCheck).then(data=>{
-        if(data.rows.length > 0) {
-        bcrypt.compare(password , data.rows[0].password , (error , CompareDone)=>{
-            if(CompareDone == true) {
-                let tokenLogin = jwt.sign({email : email , password:data.rows[0].password},key)
-                response.send({status : 200 , token : tokenLogin , id : data.rows[0].id})
-            }else{
-                response.send({ status: 400 });
-            }
-        })
-        }else{
+    client.query(checkPassword, safeCheck).then(data => {
+        if (data.rows.length > 0) {
+            bcrypt.compare(password, data.rows[0].password, (error, CompareDone) => {
+                if (CompareDone == true) {
+                    let tokenLogin = jwt.sign({ email: email, password: data.rows[0].password }, key)
+                    response.send({ status: 200, token: tokenLogin, id: data.rows[0].id })
+                } else {
+                    response.send({ status: 400 });
+                }
+            })
+        } else {
             response.send({ status: 404 });
         }
     })
@@ -134,38 +134,36 @@ function getInfoUser(request,response) {
 
 // -------------------------------------------------------------------------
 
-
-
 function addInfoUser(request, response) {
     let name = request.body.name;
     let email = request.body.email;
     let password = request.body.password;
-       let sqlCheck = `select * from users where email = $1;`
-       let safeCheck = [email]
-       client.query(sqlCheck,safeCheck).then(data=>{
-           if(data.rows.length >= 1) {
-               response.send({status : 226})
-           }else{
-            bcrypt.hash(password,8,(HashingDidNotWork, HashingPasswordWorked) => {
+    let sqlCheck = `select * from users where email = $1;`
+    let safeCheck = [email]
+    client.query(sqlCheck, safeCheck).then(data => {
+        if (data.rows.length >= 1) {
+            response.send({ status: 226 })
+        } else {
+            bcrypt.hash(password, 8, (HashingDidNotWork, HashingPasswordWorked) => {
                 if (HashingDidNotWork) {
                     response.status(500);
-                 } else {
-        let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
-        let safeValues = [name,email,HashingPasswordWorked];
-        client.query(sql,safeValues).then(()=>{
-            let sqlId = `select * from users where email = $1`
-            let safeId = [email]
-       client.query(sqlId,safeId).then(data=>{
-           let id = data.rows[0].id
-        let tokenUser = jwt.sign({name : name , email : email , password : HashingPasswordWorked},key)
-        response.send({status : 201 , token : tokenUser , id : id})
-       })
-            
-        })
+                } else {
+                    let sql = 'insert into users (name,email,password) values ($1,$2,$3);'
+                    let safeValues = [name, email, HashingPasswordWorked];
+                    client.query(sql, safeValues).then(() => {
+                        let sqlId = `select * from users where email = $1`
+                        let safeId = [email]
+                        client.query(sqlId, safeId).then(data => {
+                            let id = data.rows[0].id
+                            let tokenUser = jwt.sign({ name: name, email: email, password: HashingPasswordWorked }, key)
+                            response.send({ status: 201, token: tokenUser, id: id })
+                        })
+
+                    })
                 }
             });
-           }
-       })
+        }
+    })
 }
 
 //------------------------------------------------------------------
@@ -293,17 +291,21 @@ function ReadRecipe(request, response) {
 //------------------------------------------------------------------
 
 function updateDetails(request, response) {
-    
+    let ingredients = []
     const {
         name,
-        image_url,
+        area,
         category,
         instructions,
-        area,
-        ingredients,
-        video_url
+        image_url,
+        video_url,
+        measure,
+        ingredient
     } = request.body;
-    console.log()
+    for (let i = 0; i < ingredient.length; i++) {
+        let str = `${measure[i]}+${ingredient[i]}`;
+        ingredients.push(str)
+    }
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
@@ -329,14 +331,14 @@ function addRecipe(request, response) {
 
     const {
         name,
-        image_url,
+        area,
         category,
         instructions,
-        area,
-        ingredient,
-        measure,
+        image_url,
         video_url,
-        id_user
+        measure,
+        id_user,
+        ingredient
     } = request.body;
     for (let i = 0; i < ingredient.length; i++) {
         let str = `${measure[i]}+${ingredient[i]}`;
@@ -415,7 +417,7 @@ function deleteBookmark(request, response) {
 
 function Recipes(data) {
     this.id = data.idMeal || 'No ID Available';
-    this.name = data.strMeal.substring(0,28) || 'No Name Available';
+    this.name = data.strMeal.substring(0, 28) || 'No Name Available';
     this.image_url = data.strMealThumb || 'No Image Available';
 }
 
@@ -425,7 +427,9 @@ function RecipeDetails(data) {
     this.category = data.strCategory;
     this.area = data.strArea;
     this.image_url = data.strMealThumb;
-    this.video_url = data.strYoutube.replace("watch", "embed");
+    let video = data.strYoutube.replace("watch", "embed");
+    this.video_url = video.replace("?v=", "/");
+    console.log(this.video_url)
     this.instructions = data.strInstructions;
     this.ingredients = getIngrArr(data) || [];
 }

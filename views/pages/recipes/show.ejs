@@ -2,23 +2,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include ('../layouts/head') %>
-<body>
-    
+
+<body class='lightBg'>
+
 <main>
     <p class="elementsCount">Number of recipes in your cookbook: <%= recipesList.length %></p>
 <section>
     <% recipesList.forEach(recipe => { %>
-    <section class="recipe-template">
-        <p><br><%= recipe.name %></p><br><br>
-        <img src="<%= recipe.image_url %>"><br><br>
-        <button id="viewDetailsButton"><a href="/recipes/<%= recipe.id %>">View Recipe</a></button>
-
-    </section>
+        <a href='/recipes/<%= recipe.id %>'>
+            <section class="resultView">
+              <div class='overlayContainer'>
+                  <img src="<%= recipe.image_url %>" class="image" />
+                  <div class="overlay">
+                      <div class="text"><%= recipe.name %></div>
+                  </div>
+              </div>
+          </section></a>
     <% }); %>
     <form action="/recipes/add" method="GET">
         <button type="submit">Add Recipe</button>
     </form>
-
 </section>
 </main>
 
