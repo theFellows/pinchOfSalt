@@ -351,7 +351,7 @@ function homePage(request, response) {
 
 function Recipes(data) {
     this.id = data.idMeal || 'No ID Available';
-    this.name = data.strMeal || 'No Name Available';
+    this.name = data.strMeal.substring(0,28) || 'No Name Available';
     this.image_url = data.strMealThumb || 'No Image Available';
 }
 

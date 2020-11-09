@@ -12,7 +12,7 @@ main{
 }
 
 #searchFormSection{
-    margin-top: 100px;
+    margin-top: 80px;
     
 }
 
@@ -24,7 +24,7 @@ main{
     display: flex;
     flex-flow: column wrap;
     float: left;
-    margin: 15px;    
+    margin: 20px;  
 }
 .resultView img{
     border-radius: 5px;
@@ -32,6 +32,11 @@ main{
 .resultView h2{
     font-weight: bolder;
     color: rgb(0, 0, 0);
+    max-width: 300px;
+    margin-top:5px;
+    font-size: 20px;
+    font-family: 'Lora', serif;
+
 }
 
 /* Search Form */
@@ -43,8 +48,6 @@ form.searchForm input[type=text] {
     width: 80%;
     background: #fffff;
     border-radius: 50px;
-    box-shadow: 2px 2px 20px #ddd;
-
   }
   
   form.searchForm button {
@@ -126,3 +129,97 @@ form.searchForm input[type=text] {
     outline: none;
 }
 
+
+#hero{
+    color: red;
+    font-family: 'Lora', serif;
+    background-image: url('/back2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding-bottom: 500px;
+    padding-top: 200px;
+}
+
+#randomSection{
+    padding-left: 250px;
+    margin-top: 50px;
+}
+
+#slogan h1 {
+    font-size: 60px;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    padding-left: 250px;
+    }
+
+#slogan p{
+    font-size: 30px;
+    font-family: 'Kaushan Script', cursive;
+    color: rgb(185, 178, 178);
+    padding-left: 290px;
+
+    }
+
+#line{
+        background-color:#cf1717;
+        margin-left: 42%;
+        margin-right: 42%;
+        border: 2px solid #cf1717;
+        position: relative;
+        right: 50px;
+        margin-top: 15px;
+        margin-bottom: 50px;
+    }
+
+#randomH2{
+    color: black;
+    font-weight: bold;
+    font-size: 50px;
+    padding-left: 400px;
+
+}
+
+#randomItems{
+    padding-left: 90px;
+}
+
+/* Overlay */
+.overlayContainer {
+    position: relative;
+    width: 50%;
+  }
+  
+  .image {
+    height: auto;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #cf1717;
+  }
+  
+  .overlayContainer:hover .overlay {
+    opacity: 0.8;
+  }
+  
+  .text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }

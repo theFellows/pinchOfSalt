@@ -3,10 +3,17 @@
 body{
     color: red;
     font-family: 'Lora', serif;
-    background-image: url('/bg.png');
+}
+
+#hero{
+    color: red;
+    font-family: 'Lora', serif;
+    background-image: url('/back2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    padding-bottom: 1000px;
+    padding-top: 200px;
 }
 
 
