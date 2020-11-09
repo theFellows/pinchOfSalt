@@ -1,6 +1,6 @@
 <header>
     <div class="sidenav">
-        <img id='logo' src="/logo.png">
+        <a href="/"><img id='logo' src="/logo.png"></a>
         <a href="/">Home</a>
         <button class="dropdown-btn">World Cuisine
             <i class="fa fa-caret-down"></i>
@@ -63,6 +63,8 @@
         <a href=""><button class="dropdown-btn"  id="logout" onclick="logOutFromSite()">Log Out</button></a>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
+
     <script>
 let login = document.getElementById('login');
 let signup = document.getElementById('sign');
@@ -82,6 +84,5 @@ function logOutFromSite() {
     window.location.replace('/loginForm')
 }
     </script>
-    <script src="/js/app.js"></script>
 
 </header>

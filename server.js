@@ -234,11 +234,11 @@ function ReadRecipe(request, response) {
 function updateDetails(request, response) {
     const {
         name,
-        image_url,
         category,
-        instructions,
         area,
+        instructions,
         ingredients,
+        image_url,       
         video_url
     } = request.body;
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
