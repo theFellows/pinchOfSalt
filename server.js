@@ -61,7 +61,6 @@ function getBookmarks(request, response) {
     let id = request.params.id_user;
     console.log(`id from get ${id}`)
     const sql = 'select * from bookmarks where id_user = $1;';
-    // console.log(id)
     let safeUser = [id]
     client.query(sql,safeUser).then(data => response.render('pages/bookmarks/show', {
         bookmarksList: data.rows
@@ -71,13 +70,11 @@ function getBookmarks(request, response) {
 function getRecipes(request , response) {
     let id = request.params.id_user;
     let sql = `select * from recipes where id_user = $1;`
-    // console.log(id)
     let safeUser = [id]
     client.query(sql,safeUser).then(data => response.render('pages/recipes/show', {
         recipesList: data.rows
     }));
 }
-
 
 function getInfoUser(request,response) {
     let password = request.body.password;
@@ -252,23 +249,17 @@ function ReadRecipe(request, response) {
 }
 
 function updateDetails(request, response) {
-    let ingredients = []
-
-    console.log(request.body);
+    
     const {
         name,
-        area,
+        image_url,
         category,
         instructions,
-        image_url,
-        video_url,
-        measure,
-        ingredient
+        area,
+        ingredients,
+        video_url
     } = request.body;
-    for (let i = 0; i < ingredient.length; i++) {
-        let str = `${measure[i]}+${ingredient[i]}`;
-        ingredients.push(str)
-    }
+    console.log()
     const sql = 'UPDATE recipes SET name=$1, category=$2, area=$3, image_url=$4,video_url=$5, ingredients=$6, instructions=$7 WHERE id=$8 ;';
     const parameter = [name, category, area, image_url, video_url, ingredients, instructions, request.params.id];
     client.query(sql, parameter).then(() => {
