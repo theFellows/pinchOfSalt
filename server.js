@@ -37,7 +37,7 @@ app.post('/searches', getDataFromApi);
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
 app.get('/d:id', getById);
-app.get('/recipes/:id', getRecipes);
+app.get('/recipes', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
 app.get('/recipes/:id', getDetails);
