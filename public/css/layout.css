@@ -32,7 +32,7 @@
   .sidenav a:hover, .dropdown-btn:hover {
     color: #cf1717;
   }
-  
+
   /* Main content */
   .main {
     margin-left: 200px; /* Same as the width of the sidenav */
