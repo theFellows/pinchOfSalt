@@ -11,12 +11,15 @@
     <p class="elementsCount">Number of bookmarks in your cookbook: <%= bookmarksList.length %></p>
 <section>
     <% bookmarksList.forEach(bookmark => { %>
-    <section class="recipe-template">
-        <p><br><%= bookmark.name %></p><br><br>
-        <img src="<%= bookmark.image_url %>"><br><br>
-        <button id="viewDetailsButton"><a href="/bookmarks/<%= bookmark.id %>">View Recipe</a></button>
-
-    </section>
+    <a href='/bookmarks/<%= bookmark.id %>'>
+        <section class="resultView">
+          <div class='overlayContainer'>
+              <img src="<%= bookmark.image_url %>" class="image" />
+              <div class="overlay">
+                  <div class="text"><%= bookmark.name %></div>
+              </div>
+          </div>
+      </section></a>
     <% }); %>
 </section>
 

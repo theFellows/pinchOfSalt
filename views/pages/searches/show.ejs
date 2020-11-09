@@ -11,14 +11,19 @@
   <header>
     <%- include('../layouts/header.ejs')%>
   </header>
+  
   <main>
     <ul>
       <% recipesDetails.forEach(item=>{ %>
         <a href='d<%= item.id %>'>
-        <section class="resultView">
-       <img src="<%= item.image_url %>" />
-        <h2><%= item.name %></h2>
-      </section></a>
+          <section class="resultView">
+            <div class='overlayContainer'>
+                <img src="<%= item.image_url %>" class="image" />
+                <div class="overlay">
+                    <div class="text"><%= item.name %></div>
+                </div>
+            </div>
+        </section></a>
       <% }); %>
     </ul>
   </main>
