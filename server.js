@@ -201,9 +201,8 @@ function getRecipesByCategory(request, response) {
 
 ////////////sondos
 function getRecipes(request, response) {
-    const sql = 'SELECT * FROM recipes where id = $1;';
-    const parameter = [request.params.id];
-    client.query(sql,parameter).then(data => response.render('pages/recipes/show', {
+    const sql = 'SELECT * FROM recipes;';
+    client.query(sql).then(data => response.render('pages/recipes/show', {
         recipesList: data.rows
     }));
 }
