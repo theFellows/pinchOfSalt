@@ -41,6 +41,7 @@ function LogIn() {
           Pass_LogIn.value = "";
           Email_LogIn.value = "";      
           localStorage.setItem("token" , data.token)
+          localStorage.setItem("id" , data.id)
           window.location.replace("/")
         }else if(data.status == 400) {
           Pass_LogIn_p.innerHTML = "your password dosen't exist";
