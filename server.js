@@ -50,7 +50,7 @@ app.get('/recipe/:id_user', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
 app.get('/recipes/:id', getDetails);
-app.get('/recipes/:id', ReadRecipe);
+app.post('/recipes/:id', ReadRecipe);
 app.put('/recipes/:id', updateDetails);
 app.delete('/recipes/:id', deleteRecipe);
 //-------------------------------------------------- bookmarks routs
