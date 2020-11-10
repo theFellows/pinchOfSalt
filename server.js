@@ -31,10 +31,6 @@ const
     DATABASE_URL = process.env.DATABASE_URL,
     client = new pg.Client(DATABASE_URL);
 
-//-----------------------------------------------
-
-let randomRecipes = [];
-
 //------------------ run the server ---------------------
 
 client.connect().then(() => {
@@ -76,10 +72,6 @@ function getFormRegister(request,response) {
 
 function getFormLogin(request,response) {
     response.render('pages/login/login')
-}
-
-function homePage(request, response) {
-    response.render('pages/index');
 }
 
 function addRecipes(request, response) {
