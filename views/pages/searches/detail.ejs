@@ -9,6 +9,7 @@
   <%- include('../layouts/header.ejs') %>
 
   <main>
+    <!-- Image and Name ---------------------------------->
     <ul>
       <% recipesDetails.forEach(item=>{ %>
       <section class="resultDetails">
@@ -26,19 +27,20 @@
               <button id="recipe-button" type="submit" ><i class="fa fa-bookmark-o" style="font-size:36px;color:white"></i> Bookmark Recipe</button>
             </form>
           </div>
-
        </div>
         
-        
+        <!-- Ingredients ---------------------------------->
+        <h2 id='detailsH2'>Ingredients</h2>
+        <div id='line'></div>
+        <ol id="recipe-list-image" >
+          <% item.ingredients.forEach(ingredient =>{ %>
+          <li  id="recipe-list"><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %>:</li>
+          <img id="ingredient-image" src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
+            <% }); %>
+        </ol>
           
        <h3 id="inst">Instructions:</h3>
           <div id="recipe-instructions">       
-            <ol id="recipe-list-image" >
-              <% item.ingredients.forEach(ingredient =>{ %>
-              <li  id="recipe-list"><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %>:</li>
-              <img id="ingredient-image" src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
-                <% }); %>
-            </ol>
         
             <p id="recipe-instruction"><b> <br><br> <%= item.instructions %></b></p>
             <iframe src="<%= item.video_url %>"></iframe>
