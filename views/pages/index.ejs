@@ -28,21 +28,51 @@
         <h2 id='randomH2'>Today's Specials</h2>
         <div id='line'></div>
         <section id='randomItems'>
-            <% recipesRandomly.forEach(item=>{ %>
-            <a href='d<%= item.id %>'>
-                <section class="resultView">
-                    <div class='overlayContainer'>
-                        <img src="<%= item.image_url %>" class="image" />
-                        <div class="overlay">
-                            <div class="text"><%= item.name %></div>
-                        </div>
-                    </div>
-                </section>
-            </a>
-            <% }); %>
+      
         </section>
     </section>
     <%- include ('layouts/footer') %>
+    <script>
+        // document.getElementById('randomItems').innerHTML = "";
+        let div = document.getElementById('randomItems')
+        getRandomRecipes();
+        function getRandomRecipes() {
+        let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
+        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
+        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`
+    ]
+    // randomRecipes = [];
+    for (let i = 0; i < 6; i++) {
+        fetch(urls[i],{
+            method : 'get'
+        }).then(res=>res.json()).then(data=>{
+            data.meals.map(ele =>{
+                // for(var j=0 ; j<ele.length ; j++) {
+                    console.log(ele.strMeal)
+                    div.innerHTML += `<a href='d${ele.idMeal}'>
+                <section class="resultView">
+                    <div class='overlayContainer'>
+                        <img src="${ele.strMealThumb}" class="image" />
+                        <div class="overlay">
+                            <div class="text">${ele.strMeal}</div>
+                        </div>
+                    </div>
+                </section>
+            </a>`
+                // }
+          
+            })
+         
+            
+        })
+        // superagent.get(urls[i]).then(data => {
+        //     data.body.meals.map(element => {
+        //         randomRecipes.push(new Recipes(element))
+        //     });
+        // }).catch(handleError);
+    }
+}
+    </script>
 </body>
 
 
