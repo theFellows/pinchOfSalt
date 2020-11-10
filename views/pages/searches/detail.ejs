@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
-  <%- include('../layouts/head.ejs') %>
+<%- include('../layouts/head.ejs') %>
 
 
 <body class='lightBg'>
@@ -18,38 +17,42 @@
           </div>
           <div id="container1">
             <h2 id="recipe-detail-title"><%= item.name %></h2> <br>
-        <h4 id="recipe-detail-category"><b id="bold">Category:</b>  <%= item.category %></h3>
-          
-          <p id="recipe-detail-origin"><b id="bold">Origin:</b>  <%= item.area %></p>
-            
-            <form id="recipe-form" action="/bookmarks/<%= item.id %>" method="POST">
-             <input type="hidden" id="id_user" name="id_user">
-              <button id="recipe-button" type="submit" ><i class="fa fa-bookmark-o" style="font-size:36px;color:white"></i> Bookmark Recipe</button>
-            </form>
+            <h4 id="recipe-detail-category"><b id="bold">Category:</b> <%= item.category %></h3>
+
+              <p id="recipe-detail-origin"><b id="bold">Origin:</b> <%= item.area %></p>
+
+              <form id="recipe-form" action="/bookmarks/<%= item.id %>" method="POST">
+                <input type="hidden" id="id_user" name="id_user">
+                <button id="recipe-button" type="submit"><i class="fa fa-bookmark-o"
+                    style="font-size:36px;color:white"></i> <span style="position: relative;bottom: 5px"> Bookmark
+                    Recipe</span></button>
+              </form>
           </div>
-       </div>
-        
+        </div>
+
         <!-- Ingredients ---------------------------------->
+        <img src="/ingr.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
         <h2 id='detailsH2'>Ingredients</h2>
-        <div id='line'></div>
-        <ol id="recipe-list-image" >
+        <table id="ingrTable">
           <% item.ingredients.forEach(ingredient =>{ %>
-          <li  id="recipe-list"><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %>:</li>
-          <img id="ingredient-image" src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
-            <% }); %>
-        </ol>
-          
-       <h3 id="inst">Instructions:</h3>
-          <div id="recipe-instructions">       
-        
-            <p id="recipe-instruction"><b> <br><br> <%= item.instructions %></b></p>
-            <iframe src="<%= item.video_url %>"></iframe>
-          </div>
-          
-          
-         
-          
-      
+          <tr>
+            <td><%= ingredient.split('+')[0] %></td>
+            <td><%= ingredient.split('+')[1] %></td>
+            <td><img id="ingredient-image"
+                src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png"></td>
+          </tr>
+          <% }); %>
+        </table>
+
+        <img src="/inst.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
+        <h2 id='detailsH2'>Instructions</h2>
+          <p id="recipe-instruction"><b> <br> <%= item.instructions %></b></p>
+
+        <img src="/video.png" id="videoIcon" class="icons" style="width:40px; height: 40px">
+        <h2 id='detailsH2'>Watch</h2><br><br>
+        <div id="videoFrame"> 
+          <iframe src="<%= item.video_url %>"></iframe>
+        </div>
       </section>
       <% }); %>
 

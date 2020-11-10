@@ -1,39 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <%- include ('../layouts/head') %>
+<%- include('../layouts/head.ejs') %>
+
 
 <body class='lightBg'>
-    <%- include ('../layouts/header') %>
-    <section>
-        <section class="recipe-template">
-            <p><br><%= bookmark.name %></p><br><br>
-            <img src="<%= bookmark.image_url %>"><br><br>
-            <p><%= bookmark.instructions %></p><br><br>
-            <p><%= bookmark.category %></p><br><br>
-            <p><%= bookmark.area %></p><br><br>
-            <p>Ingredients: </p>       
-            <ul>
-              <% ingrArr.forEach(ingredient =>{ %>
-              <li><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %></li>
-              <img src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
-                <% }); %>
-            </ul>
-            <iframe width="420" height="315" src="<%= bookmark.video_url %>" frameborder="0" gesture="media"
-                allow="encrypted-media" allowfullscreen></iframe>
-        </section>
-    </section>
-    <form action="/bookmarks/<%= bookmark.id %>?_method=DELETE" method="POST">
-        <input type="hidden" id="id_user" name="id_user">
-        <input type="submit" value="Delete Bookmark">
-    </form>
-    <script>
-        if(localStorage.getItem('token') == undefined) {
-        window.location.replace("/registerForm")
-}
+    <%- include('../layouts/header.ejs') %>
 
-    document.getElementById('id_user').value = localStorage.getItem('id')
-  
+    <main>
+        <!-- Image and Name ---------------------------------->
+        <ul>
+            <section class="resultDetails">
+                <div id="container">
+                    <div id="container2"><img id="recipe-detail-image" src="<%= bookmark.image_url %>" />
+                    </div>
+                    <div id="container1">
+                        <h2 id="recipe-detail-title"><%= bookmark.name %></h2> <br>
+                        <h4 id="recipe-detail-category"><b id="bold">Category:</b> <%= bookmark.category %></h4>
+
+                        <p id="recipe-detail-origin"><b id="bold">Origin:</b> <%= bookmark.area %></p>
+                        <form action="/bookmarks/<%= bookmark.id %>?_method=DELETE" method="POST">
+                            <input type="hidden" id="id_user" name="id_user">
+                            <button id='recipe-button' type="submit" value="Delete Bookmark"><i class="fa fa-trash-o"
+                                    style="font-size:36px;color:white"></i> <span
+                                    style="position: relative;bottom: 5px"> Delete Bookmark</span></button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Ingredients ---------------------------------->
+                <img src="/ingr.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
+                <h2 id='detailsH2'>Ingredients</h2>
+                <table id="ingrTable">
+                    <% ingrArr.forEach(ingredient =>{ %>
+                    <tr>
+                        <td><%= ingredient.split('+')[0] %></td>
+                        <td><%= ingredient.split('+')[1] %></td>
+                        <td><img id="ingredient-image"
+                                src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
+                        </td>
+                    </tr>
+                    <% }); %>
+                </table>
+
+                <img src="/inst.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
+                <h2 id='detailsH2'>Instructions</h2>
+                <p id="recipe-instruction"><b> <br> <%= bookmark.instructions %></b></p>
+
+                <img src="/video.png" id="videoIcon" class="icons" style="width:40px; height: 40px">
+                <h2 id='detailsH2'>Watch</h2><br><br>
+                <div id="videoFrame">
+                    <iframe src="<%= bookmark.video_url %>"></iframe>
+                </div>
+            </section>
+
+        </ul>
+    </main>
+    <script>
+        document.getElementById('id_user').value = localStorage.getItem('id')
     </script>
 </body>
 
