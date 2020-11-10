@@ -39,8 +39,6 @@
           <tr>
             <td><%= ingredient.split('+')[0] %></td>
             <td><%= ingredient.split('+')[1] %></td>
-            <td><img id="ingredient-image"
-                src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png"></td>
           </tr>
           <% }); %>
         </table>
@@ -52,7 +50,7 @@
         <img src="/video.png" id="videoIcon" class="icons" style="width:40px; height: 40px">
         <h2 id='detailsH2'>Watch</h2><br><br>
         <div id="videoFrame"> 
-          <iframe src="<%= recipe.video_url %>"></iframe>
+          <iframe src="<%= recipe.video_url.replace('watch', 'embed').replace('?v=', '/') %>"></iframe>
         </div>
       </section>
 

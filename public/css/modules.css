@@ -12,7 +12,7 @@ main{
   background-color: white;
 }
 #logout:hover{
-  color: #cf1717;
+  color:  rgb(146, 11, 11);
 }
 
 #searchFormSection{
@@ -61,7 +61,7 @@ form.searchForm button {
   /*width: 20%;*/
   padding: 10px;
   background: white;
-  color: #cf1710;
+  color:  rgb(146, 11, 11);
   font-size: 17px;
   border: 2px solid white;
   border-left: none;
@@ -74,7 +74,7 @@ form.searchForm button {
 }
 
 form.searchForm button:hover {
-  background: #cf1717;
+  background:  rgb(146, 11, 11);
   color: white;
 
 }
@@ -140,7 +140,6 @@ font-weight:normal;
 
 
 #hero{
-  color: red;
   font-family: 'Lora', serif;
   background-image: url('/back2.jpg');
   background-repeat: no-repeat;
@@ -177,10 +176,10 @@ font-weight:normal;
   }
 
 #line{
-      background-color:#cf1717;
+      background-color: rgb(146, 11, 11);
       margin-left: 42%;
       margin-right: 42%;
-      border: 2px solid #cf1717;
+      border: 2px solid  rgb(146, 11, 11);
       position: relative;
       right: 50px;
       margin-top: 10px;
@@ -206,9 +205,6 @@ font-weight:normal;
   width: 50%;
 }
 
-.image {
-  height: auto;
-}
 
 .overlayImage {
   position: absolute;
@@ -220,7 +216,7 @@ font-weight:normal;
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #cf1717;
+  background-color:  rgb(146, 11, 11);
 }
 
 .overlayContainer:hover .overlayImage {
@@ -333,10 +329,65 @@ font-weight:normal;
  cursor: pointer;
 }
 #logout:hover{
-  color:#cf1710;
+  color: rgb(146, 11, 11);
  }
 
- /*style signIn signup page*/
+
+ /* Cookbook main page ------------ */
+
+ .elementsCount{
+  color: black;
+  font-weight: bold;
+  font-size: 40px;
+  margin: auto;
+  padding-top: 20px;
+  position: relative;
+  left: -150px;
+ }
+
+ .mainAddButton{
+  font-family: 'Raleway', sans-serif;
+  box-sizing: inherit;
+  padding: 5px 5px;
+  line-height: 1.5;
+  font-size: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 3px solid  rgb(146, 11, 11);
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 15%;
+  background-color:  rgb(146, 11, 11) ;
+  color: white;
+  position: relative;
+  top: 80px;
+  right: 517px;
+  }
+
+  .mainAddButton:hover{
+    border: 3px solid black;
+  }
+
+  .recipesShow{
+    margin-top: 100px;
+  }
+
+  #elementsCountBookmarks{
+    color: black;
+    font-weight: bold;
+    font-size: 40px;
+    margin: auto;
+    padding-top: 20px;
+    position: relative;
+    left: -10px;
+  }
+
+  .bookmarksShow{
+    margin-left: 250px;
+    margin-top: 100px;
+  }
+
+/*style signIn signup page*/
 .lightBg{
 	margin:0;
 	color:#6a6f8c;

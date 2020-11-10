@@ -33,8 +33,9 @@
 
 /* On mouse-over */
 .sidenav a:hover, .sidenav span:hover, .dropdown-btn:hover {
-  color: #cf1717;
+  color: rgb(146, 11, 11);
 }
+
 
 /* Main content */
 .main {
@@ -46,7 +47,7 @@
 /* Add an active class to the active dropdown button */
 .active {
   background-color: #ddd;
-  color: #cf1717;
+  color: rgb(146, 11, 11);
 }
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
@@ -218,11 +219,11 @@
   font-size: 20px;
   border-radius: 2px;
   cursor: pointer;
-  border: 3px solid #cf1717 ;
+  border: 3px solid rgb(146, 11, 11) ;
   text-transform: capitalize;
   font-weight: bold;
   width: 35%;
-  background-color: #cf1717 ;
+  background-color: rgb(146, 11, 11) ;
   color: white;
   position: relative;
   top: 100px;
@@ -260,10 +261,10 @@ left: -50px;
 }
 
 #detailsLine{
-  background-color:#cf1717;
+  background-color:rgb(146, 11, 11);
       margin-left: 42%;
       margin-right: 42%;
-      border: 2px solid #cf1717;
+      border: 2px solid rgb(146, 11, 11);
       position: relative;
       margin-top: 10px;
       margin-bottom: 10px;
@@ -311,7 +312,9 @@ left: -50px;
   top: 20px;
   right: 45px;
   font-size: 60px;
+  cursor: pointer;
 }
+
 
 #overlayList1 {
   position: absolute;
@@ -393,11 +396,11 @@ left: -50px;
   font-size: 20px;
   border-radius: 2px;
   cursor: pointer;
-  border: 3px solid #cf1717 ;
+  border: 3px solid rgb(146, 11, 11) ;
   text-transform: capitalize;
   font-weight: bold;
   width: 35%;
-  background-color: #cf1717 ;
+  background-color: rgb(146, 11, 11) ;
   color: white;
   position: relative;
   top: 100px;
@@ -411,11 +414,11 @@ left: -50px;
   font-size: 20px;
   border-radius: 2px;
   cursor: pointer;
-  border: 3px solid #cf1717 ;
+  border: 3px solid  rgb(146, 11, 11) ;
   text-transform: capitalize;
   font-weight: bold;
   width: 35%;
-  background-color: #cf1717 ;
+  background-color:  rgb(146, 11, 11) ;
   color: white;
   position: relative;
   top: 33px;
