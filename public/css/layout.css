@@ -424,4 +424,51 @@ left: -50px;
   top: 33px;
   left: 260px;
 }
+/*style for aboutUs page */
 
+.aboutUs{
+  font-family:'Gudea', sans-serif;
+  color: rgb(156, 0, 0);
+}
+ 
+.teamimg {
+  width: 160px;
+  border-radius: 500px;}
+.first img {
+  float: left;
+
+}
+.first span p {
+  width: 400px;
+  line-height: 1.3;
+}
+.first span{
+  margin-left: 40px;
+  display: inline-block;
+  margin-top: 12px;
+}
+.first{
+  padding: 70px;
+  float: left;
+}
+.first span img {
+  width: 22px;
+  padding: 3px;
+}
+.first span h3 {
+  font-size: 25px;
+}
+
+#our{
+  text-align: center;
+  font-size: 40px;
+}
+#our span{
+  font-size: 25px;
+}
+.last-section p {
+  margin-top: 50px;
+}
+.last-section article{
+  margin-left: 170px;
+}

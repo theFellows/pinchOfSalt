@@ -63,6 +63,8 @@ app.get('/registerForm' , getFormRegister)
 app.get('/loginForm' , getFormLogin)
 app.post('/register', addInfoUser)
 app.post('/login', getInfoUser)
+//new
+app.get('/aboutUs', getaboutUs)
 
 // ------------------- functions for routs (get forms) ----------------------------
 
@@ -81,7 +83,10 @@ function addRecipes(request, response) {
 function getRandomRecipes(request,response) {
     response.render('pages/index')
 } 
-
+//new
+function getaboutUs(request,response) {
+    response.render('pages/aboutUs')
+}
 // -------------------------------- functions for methods of routs ----------------------------
 
 function getBookmarks(request, response) {
