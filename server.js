@@ -54,7 +54,7 @@ app.get('/recipe/:id_user', getRecipes);
 app.get('/recipes/add', addRecipes);
 app.post('/recipes', addRecipe);
 app.get('/recipes/:id', getDetails);
-app.post('/recipes/:id', ReadRecipe);
+app.get('/recipes/:id', ReadRecipe);
 app.put('/recipes/:id', updateDetails);
 app.delete('/recipes/:id', deleteRecipe);
 //-------------------------------------------------- bookmarks routs
@@ -85,6 +85,10 @@ function homePage(request, response) {
 function addRecipes(request, response) {
     response.render('pages/recipes/add')
 }
+
+function getRandomRecipes(request,response) {
+    response.render('pages/index')
+} 
 
 // -------------------------------- functions for methods of routs ----------------------------
 
@@ -179,31 +183,6 @@ function getById(request, response) {
             recipesDetails: result
         });
     }).catch(handleError);
-}
-
-//-------------------------------------------------------------------
-
-function getRandomRecipes(request, response) {
-    let urls = [`https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
-        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
-        `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`
-    ]
-
-    for (let i = 0; i < 6; i++) {
-        superagent.get(urls[i]).then(data => {
-            data.body.meals.map(element => {
-                randomRecipes.push(new Recipes(element))
-            });
-        }).catch(handleError);
-    }
-
-    if (randomRecipes.length > 7) {
-        randomRecipes = [];
-    }
-
-    response.render('pages/index', {
-        recipesRandomly: randomRecipes
-    });
 }
 
 //-------------------------------------------------------------------
