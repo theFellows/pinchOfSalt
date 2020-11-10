@@ -4,6 +4,7 @@
     <%- include ('../layouts/head') %>
     
 <body class='lightBg'>
+    <%- include('../layouts/header.ejs') %>
 <main id="main">
    
     <br>
@@ -11,7 +12,6 @@
         <h2>Add Your Recipe</h2><br><br>
         <input class="edit" type="text" value="" name="name" placeholder="Recipe Name"></input>
         <br><br>
-        
   
         <input class="edit" type="text" value="" name="category" placeholder="Category"></input>
         <br><br>
@@ -19,7 +19,6 @@
         <input class="edit" type="text" value="" name="area" placeholder="Origin"></input>
         <br><br>
  
-        
         <label for="instructions">Instructions</label>
         <br>
         <textarea id="textarea" class="edit" name="instructions"></textarea>
