@@ -167,9 +167,8 @@
   }
 
   #ingredient-image{
-    width:5vw;
-    height: 3vw;
-    padding: 2px;
+    width: 60px;
+    height: 60px;
   } 
  
 
@@ -190,12 +189,12 @@
   }
 
  iframe{
-   width: 35vw;
-   height: 20vw;
+   width: 80%;
+   height: 600px;
    grid-column: 1/2;
    grid-row: 2/3;
    box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.2), 0 15px 20px 0 rgba(0, 0, 0, 0.19);
-   margin: auto;
+   margin-left: -200px;
    }
 
 
@@ -205,12 +204,13 @@
   display:grid;
   grid-column: 1/2;
   grid-row:1/2;
-  padding-left: 15px;
+  padding-left: 40px;
   line-height: 1.6;
   text-align: justify;
+  width: 80%;
  }
 
-#recipe-button{
+ #recipe-button{
   font-family: 'Raleway', sans-serif;
   box-sizing: inherit;
   padding: .688rem 1.25rem;
@@ -218,20 +218,21 @@
   font-size: 20px;
   border-radius: 2px;
   cursor: pointer;
-  border: 3px solid #085239 ;
+  border: 3px solid #cf1717 ;
   text-transform: capitalize;
   font-weight: bold;
   width: 35%;
-  background-color: #085239 ;
+  background-color: #cf1717 ;
   color: white;
   position: relative;
   top: 100px;
-
 }
 
-#recipe-button:hover{
-  background-color: #cf1717;
+#recipe-button:hover, #editRecipe:hover, #deleteRecipe:hover{
+  border: 3px solid black;
 }
+
+
 
 #recipe-button:focus{
   outline: none;
@@ -339,4 +340,84 @@ left: -50px;
   left: 70%;
   text-align: left;
   margin-top: 30px;
+}
+
+
+.icons{
+  width: 40px;
+  height: 40px;
+}
+
+#ingrIcon{
+  position: relative;
+  top: 60px;
+  right: 190px;
+}
+
+#videoIcon{
+  position: relative;
+  top: 60px;
+  right: 140px;
+}
+
+/* Ingredients table */
+#ingrTable {
+  font-family: 'Raleway', sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-top: 50px;
+  margin-left: 40px;
+}
+
+#ingrTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: #000000;
+  font-size: 15px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+
+#ingrTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#ingrTable tr:hover {background-color: #ddd;}
+
+
+
+#editRecipe{
+  font-family: 'Raleway', sans-serif;
+  box-sizing: inherit;
+  padding: .688rem 1.25rem;
+  line-height: 1.5;
+  font-size: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 3px solid #cf1717 ;
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 35%;
+  background-color: #cf1717 ;
+  color: white;
+  position: relative;
+  top: 100px;
+}
+
+#deleteRecipe{
+  font-family: 'Raleway', sans-serif;
+  box-sizing: inherit;
+  padding: .688rem 1.25rem;
+  line-height: 1.5;
+  font-size: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 3px solid #cf1717 ;
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 35%;
+  background-color: #cf1717 ;
+  color: white;
+  position: relative;
+  top: 33px;
+  left: 260px;
 }

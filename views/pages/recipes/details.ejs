@@ -1,40 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <%- include ('../layouts/head') %>
-    
+
+<%- include('../layouts/head.ejs') %>
+
+
 <body class='lightBg'>
-    <%- include('../layouts/header.ejs') %>
-    <main>
-        <section>
-            <section class="recipe-template">
-                <p><br><%= recipe.name %></p><br><br>
-                <img src="<%= recipe.image_url %>"><br><br>
-                 <p><%= recipe.instructions %></p><br><br>
-                 <p><%= recipe.category %></p><br><br>
-                 <p><%= recipe.area %></p><br><br>
-                 <p>Ingredients: </p>       
-                 <ul>
-                   <% ingrArr.forEach(ingredient =>{ %>
-                   <li><%= ingredient.split('+')[0] %>  <%= ingredient.split('+')[1] %></li>
-                     <% }); %>
-                 </ul>
-                 <iframe width="420" height="315" src="<%= recipe.video_url %>" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-            </section>
-        </section>
-        <form action="/recipes/<%= recipe.id %>" method="POST">
-            <button type="submit">Update Details</button>
-        </form>
-        <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="POST">
-            <input type="hidden" id="id_user" name="id_user">
-            <input type="submit" value="Delete Recipe">
-        </form>
-         </main>
-        <script>
-            if(localStorage.getItem('token') == undefined) {
-            window.location.replace("/registerForm")
-    }
+  <%- include('../layouts/header.ejs') %>
+
+  <main>
+    <!-- Image and Name ---------------------------------->
+    <ul>
+      <section class="resultDetails">
+        <div id="container">
+          <div id="container2"><img id="recipe-detail-image" src="<%= recipe.image_url %>" />
+          </div>
+          <div id="container1">
+            <h2 id="recipe-detail-title"><%= recipe.name %></h2> <br>
+            <h4 id="recipe-detail-category"><b id="bold">Category:</b> <%= recipe.category %></h3>
+
+              <p id="recipe-detail-origin"><b id="bold">Origin:</b> <%= recipe.area %></p>
+              <form action="/recipes/<%= recipe.id %>" method="POST">
+                <button id="editRecipe" type="submit"><i class="fa fa-edit"
+                    style="font-size:36px;color:white"></i> <span style="position: relative;bottom: 5px"> Update Recipe</span></button>
+            </form>
+            <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="POST">
+                <input type="hidden" id="id_user" name="id_user">
+                <button id="deleteRecipe" type="submit" value="Delete Recipe"><i class="fa fa-trash-o"
+                    style="font-size:36px;color:white"></i> <span style="position: relative;bottom: 5px"> Delete Recipe</span></button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Ingredients ---------------------------------->
+        <img src="/ingr.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
+        <h2 id='detailsH2'>Ingredients</h2>
+        <table id="ingrTable">
+          <% ingrArr.forEach(ingredient =>{ %>
+          <tr>
+            <td><%= ingredient.split('+')[0] %></td>
+            <td><%= ingredient.split('+')[1] %></td>
+            <td><img id="ingredient-image"
+                src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png"></td>
+          </tr>
+          <% }); %>
+        </table>
+
+        <img src="/inst.png" id="ingrIcon" class="icons" style="width:40px; height: 40px">
+        <h2 id='detailsH2'>Instructions</h2>
+          <p id="recipe-instruction"><b> <br> <%= recipe.instructions %></b></p>
+
+        <img src="/video.png" id="videoIcon" class="icons" style="width:40px; height: 40px">
+        <h2 id='detailsH2'>Watch</h2><br><br>
+        <div id="videoFrame"> 
+          <iframe src="<%= recipe.video_url %>"></iframe>
+        </div>
+      </section>
+
+    </ul>
+  </main>
+  <script>
     document.getElementById('id_user').value = localStorage.getItem('id')
-        </script>
+  </script>
 </body>
+
 </html>
