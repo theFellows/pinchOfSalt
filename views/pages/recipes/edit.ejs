@@ -2,6 +2,7 @@
 <html lang="en">
 <%- include ('../layouts/head') %>
 <body class='lightBg'>
+    <%- include('../layouts/header.ejs') %>
 
     <main id="main">
 
@@ -33,16 +34,17 @@
             <input class="edit" type="text" value="<%=recipesList.video_url%>" name="video_url"></input>
             <br><br>
 
-            <label for="ingredients">Ingredients</label>
+            <p class="add_field_button"><i class="fa fa-plus" style="font-size:20px"></i>Add ingredients</p>
+            <br>
             <section class="input_fields_wrap">
 
                 <% ingrArr.forEach(ingredient =>{ %>
                 <div>
                     <br>
-                    <div> <input id="ingrEdit" class="edit" type="text" value="<%= ingredient.split('+')[0] %>"
+                    <div> <input id="ingr" class="edit" type="text" value="<%= ingredient.split('+')[0] %>"
                             name="measure"></input>
-                        <input id="ingrEdit" class="edit" type="text" value="<%= ingredient.split('+')[1] %>"
-                            name="ingredient" placeholder="salt"></input>
+                        <input id="ingr" class="edit" type="text" value="<%= ingredient.split('+')[1] %>"
+                            name="ingredient" placeholder="salt"></input> <a href="#" class="remove_field"><i class="fa fa-trash-o" style="font-size:20px;color:#cf1717"></i></a><br>
                         <br>
                         <br>
                     </div>
