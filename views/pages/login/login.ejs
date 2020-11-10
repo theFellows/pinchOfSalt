@@ -2,21 +2,84 @@
 <html lang="en">
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="/public/css/layout.css">
+    <%- include ('../layouts/head') %>
+    
 </head>
 <body class='lightBg'>
 
-<input type="text" name="email" placeholder="Enter your email" id="email">
-<p id="alert_email"></p>
-<input type="password" name="password" placeholder="Enter your password" id="password">
-<p id="alert_password"></p>
-<button onclick="LogIn()">Login</button>
 
-<a href="/registerForm">signUp</a>
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<div class="login-form">
+			<div class="sign-in-htm">
+        <br>
+        <br>
+				<div class="group">
+          <label for="user" class="label">Email Address</label>
+          <input type="text" name="email" placeholder="Enter your email" id="email2" class="input">
+          <br>
+          <p id="alert_email"></p>
+				<br>
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+          <input type="password" name="password" placeholder="Enter your password" id="password2" class="input">
+          <br>
+          <p id="alert_password"></p>
+        </div>
+        <br>
+				<div class="group">
+					<input id="check" type="checkbox" class="check" checked>
+					<label for="check"><span class="icon"></span> Keep me Signed in</label>
+        </div>
+        <br>
+        <br>
+				<div class="group">
+          <button onclick="LogIn()" class="button">Sign-In</button>
+				</div>
+				
+				
+			</div>
+			<div class="sign-up-htm">
+				<div class="group">
+          <br>
+					<label for="user" class="label">Username</label>
+          <input id="name" name="name" type="text" class="input">
+          <br>
+          <p id="name-p"></p>
+          <br>
+				</div>
+				<div class="group">
+          <label for="pass" class="label">Password</label>
+          <input type="password" name="password" placeholder="Enter your password" id="password" class="input">
+          <br>
+          <p id="email-p"></p>
+          <br>
+				</div>
+				<div class="group">
+          <label for="pass" class="label">Email Address</label>
+          <input type="text" name="email" placeholder="Enter your email" id="email" class="input">
+          <br>
+          <p id="pass-p"></p>
+         <br>
+         <br>
+				</div>
+				<div class="group">
+          <button onclick="register()" class="button">Sign-Up</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
   
-let Email_LogIn = document.getElementById("email");
-let Pass_LogIn = document.getElementById("password");
+let Email_LogIn = document.getElementById("email2");
+let Pass_LogIn = document.getElementById("password2");
 
 let Email_LogIn_p = document.getElementById("alert_email");
 let Pass_LogIn_p = document.getElementById("alert_password");
@@ -53,6 +116,41 @@ function LogIn() {
         }
     })
 }
+
+
+let email = document.getElementById('email');
+let name = document.getElementById('name');
+let pass = document.getElementById('password');
+let email_p = document.getElementById('email-p');
+let name_p = document.getElementById('name-p');
+let pass_p = document.getElementById('pass-p');
+
+
+function register(){
+  
+  fetch("http://localhost:3030/register",{
+    method:"POST",
+    headers:header,
+    body:JSON.stringify({
+      email:email.value,
+      password:pass.value,
+      name:name.value
+    })
+  }).then(re=>
+    re.json()
+  ).then(data=>{
+      if(data.status == 226) {
+        email_p.innerHTML = "your Email is Exists";
+        email_p.style.border="2px solid red";
+      }else{
+        email_p.innerHTML = "";
+        localStorage.setItem("token",data.token)   
+        localStorage.setItem('id' , data.id)
+        window.location.replace("/")
+      }
+  })
+}
+
 </script>
 </body>
 </html>
