@@ -9,6 +9,7 @@
 </head>
 
 <body class='lightBg'>
+  <%- include('../layouts/header.ejs') %>
 
   <main>
     <ul>
@@ -32,17 +33,18 @@
        </div>
         
         
-          <p id="recipe-ingredient"> <b>Ingredients:</b></p>
+          
+       
+       <h3 id="inst">Instructions:</h3>
           <div id="recipe-instructions">       
-            <ol id="recipe-list-image">
+            <ol id="recipe-list-image" >
               <% item.ingredients.forEach(ingredient =>{ %>
               <li  id="recipe-list"><%= ingredient.split('+')[0] %> <%= ingredient.split('+')[1] %>:</li>
               <img id="ingredient-image" src="https://www.themealdb.com/images/ingredients/<%= ingredient.split('+')[1] %>.png">
                 <% }); %>
             </ol>
         
-          
-            <p id="recipe-instruction"><b>Instructions: <br><br> <%= item.instructions %></b></p>
+            <p id="recipe-instruction"><b> <br><br> <%= item.instructions %></b></p>
             <iframe src="<%= item.video_url %>"></iframe>
           </div>
           
