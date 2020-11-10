@@ -271,9 +271,10 @@ font-weight:normal;
   color: white;
 }
 
-#add-recipe-button:hover{
-  background-color:  #cf1710;
 
+#add-recipe-button:hover{
+  background-color: white;
+  color: rgb(146, 11, 11);
 }
 
 #slogan h1{
