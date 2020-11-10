@@ -7,8 +7,12 @@
     <%- include('../layouts/header.ejs') %>
 
 <main>
-    <p class="elementsCount">Number of recipes in your cookbook: <%= recipesList.length %></p>
-<section>
+    <p class="elementsCount">You have <%= recipesList.length %> recipes in your cookbook.</p>
+    <form action="/recipes/add" method="GET">
+        <button class='mainAddButton' type="submit"><i class="fa fa-plus"
+            style="font-size:36px;color:white"></i> <span style="position: relative;bottom: 5px"> Add Recipe</button>
+    </form>
+<section class="recipesShow">
     <% recipesList.forEach(recipe => { %>
         <a href='/recipes/<%= recipe.id %>'>
             <section class="resultView">
@@ -20,9 +24,6 @@
               </div>
           </section></a>
     <% }); %>
-    <form action="/recipes/add" method="GET">
-        <button type="submit">Add Recipe</button>
-    </form>
 </section>
 </main>
 

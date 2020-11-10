@@ -394,7 +394,7 @@ function Recipes(data) {
 
 function RecipeDetails(data) {
     this.id = data.idMeal;
-    this.name = data.strMeal.substring(0, 30);
+    this.name = data.strMeal.substring(0, 20);
     this.category = data.strCategory;
     this.area = data.strArea;
     this.image_url = data.strMealThumb;

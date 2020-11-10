@@ -4,8 +4,8 @@
     <%- include ('../layouts/head') %>
 <body class='lightBg'>
     <%- include ('../layouts/header') %>
-    <p class="elementsCount">Number of bookmarks in your cookbook: <%= bookmarksList.length %></p>
-<section>
+    <p id="elementsCountBookmarks">You have <%= bookmarksList.length %> bookmarks in your cookbook.</p>
+<section class="bookmarksShow">
     <% bookmarksList.forEach(bookmark => { %>
     <a href='/bookmarks/<%= bookmark.id %>'>
         <section class="resultView">
