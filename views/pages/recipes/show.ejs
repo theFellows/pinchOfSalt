@@ -4,6 +4,7 @@
     <%- include ('../layouts/head') %>
 
 <body class='lightBg'>
+    <%- include('../layouts/header.ejs') %>
 
 <main>
     <p class="elementsCount">Number of recipes in your cookbook: <%= recipesList.length %></p>
@@ -13,7 +14,7 @@
             <section class="resultView">
               <div class='overlayContainer'>
                   <img src="<%= recipe.image_url %>" class="image" />
-                  <div class="overlay">
+                  <div class="overlayImage">
                       <div class="text"><%= recipe.name %></div>
                   </div>
               </div>

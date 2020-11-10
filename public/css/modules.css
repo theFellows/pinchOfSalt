@@ -6,8 +6,6 @@
 
 main{
   padding-left: 250px;
-
-
 }
 
 #searchFormSection{
@@ -47,28 +45,31 @@ form.searchForm input[type=text] {
   float: left;
   width: 80%;
   background: #ffff;
-  border-radius: 50px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 form.searchForm button {
   float: left;
   /*width: 20%;*/
   padding: 10px;
-  background: #cf1717;
-  color: white;
+  background: white;
+  color: #cf1710;
   font-size: 17px;
-  border: 1px solid #cf1717;
+  border: 2px solid white;
   border-left: none;
   cursor: pointer;
-  border-radius: 50px;
+  border-radius: 5px;
   position: relative;
-  left: -35px;
-  top: 2px;
+  left: -38px;
+  top: 1px;
 
 }
 
 form.searchForm button:hover {
   background: #cf1717;
+  color: white;
+
 }
 
 form.searchForm::after {
@@ -92,7 +93,7 @@ box-sizing: border-box;
 margin: 0;
 border: 1px solid #aaa;
 box-shadow: 0 0.5px 0 0.5px #ddd;
-border-radius: 50px;
+border-radius: 5px;
 -moz-appearance: none;
 -webkit-appearance: none;
 appearance: none;
@@ -104,7 +105,7 @@ background-position: right .7em top 50%, 0 0;
   background-size: .65em auto, 100%;
   position: relative;
   top: 10px;
-  left: 130px;
+  left: 155px;
   height: 30px;
 }
 
@@ -138,13 +139,18 @@ font-weight:normal;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  padding-bottom: 500px;
+  padding-bottom: 400px;
   padding-top: 200px;
 }
 
 #randomSection{
   padding-left: 250px;
-  margin-top: 50px;
+  background-image: url('/marble.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-bottom: 800px;
+  padding-top: 10px;
 }
 
 #slogan h1 {
@@ -170,8 +176,8 @@ font-weight:normal;
       border: 2px solid #cf1717;
       position: relative;
       right: 50px;
-      margin-top: 15px;
-      margin-bottom: 50px;
+      margin-top: 10px;
+      margin-bottom: 10px;
   }
 
 #randomH2{
@@ -179,6 +185,7 @@ font-weight:normal;
   font-weight: bold;
   font-size: 50px;
   padding-left: 400px;
+  padding-top: 20px;
 
 }
 
@@ -196,7 +203,7 @@ font-weight:normal;
   height: auto;
 }
 
-.overlay {
+.overlayImage {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -209,7 +216,7 @@ font-weight:normal;
   background-color: #cf1717;
 }
 
-.overlayContainer:hover .overlay {
+.overlayContainer:hover .overlayImage {
   opacity: 0.8;
 }
 
@@ -227,7 +234,7 @@ font-weight:normal;
 
 /* light background */
 .lightBg{
-  background-image: url('/bg.png');
+  background-image: url('/bg1.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -241,20 +248,83 @@ font-weight:normal;
 }
 
 #add-recipe-button{
-  width:50%;
-  background-color: #cf1717;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  box-sizing: inherit;
+  padding: .688rem 1.25rem;
+  line-height: 1.5;
   font-size: 20px;
-  border-radius: 70px ;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 3px solid rgb(146, 11, 11);
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 45%;
+  background-color: rgb(146, 11, 11);
+  border-color: rgb(146, 11, 11);
+  color: white;
 }
 
 #add-recipe-button:hover{
-  background-color:  #cf1710 ;
+  background-color:  #cf1710;
 
 }
+
+#slogan h1{
+    font-size: 80px;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    margin-left: -130px;
+}
+
+
+#slogan div{
+  background-color: rgb(146, 11, 11);
+  margin-left: 42%;
+  margin-right: 42%;
+  border: 2.5px solid rgb(146, 11, 11);
+}
+
+#slogan button{
+  font-family: 'Raleway', sans-serif;
+  box-sizing: inherit;
+  padding: .688rem 1.25rem;
+  line-height: 1.5;
+  font-size: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 3px solid rgb(146, 11, 11);
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 200px;
+  background-color: rgb(146, 11, 11);
+  border-color: rgb(146, 11, 11);
+  color: white;
+  margin-left: 460px;
+  
+}
+
+#viewSearchButton{
+  margin-top: 60px;
+  margin-bottom: 20px;;
+}
+
+
+#slogan button:hover{
+  background-color: white;
+  color: rgb(146, 11, 11);
+}
+
+#slogan img{
+  width: 50px;
+  height: 50px;
+  margin-left: 550px;
+}
+
+#logout{
+ background-color: white;
+ cursor: pointer;
+}
+#logout:hover{
+  color:#cf1710;
+ }
+

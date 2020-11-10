@@ -8,19 +8,14 @@
 
         <main>
             <section id="slogan">
+                <img src="/cooking.png" alt="">
+                <h1>FOOD MADE WITH LOVE </h1>
+                <div id="line"></div>
                 <p>Take a slice of the world's perfect culinary heaven!</p>
-            </section>
-            <section id="searchFormSection">
-                <form class="searchForm" action="/searches" method="POST" style="margin:auto;max-width:500px">
-                    <input id="searchBar" type="text" name="search" placeholder="Search Recipes">
-                    <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
-                    <select class="select-css" name="sort">
-                        <option selected disabled>Search by</option>
-                        <option value="name">Name</option>
-                        <option value="category">Category</option>
-                        <option value="area">Origin</option>
-                    </select>
-                </form>
+                <a href='aAmerican'><button id="viewSearchButton">SEARCH RECIPES</button></a>
+                <a href="#randomSection"><button>TODAY'S SPECIALS</button></a>
+
+
             </section>
         </main>
     </section>
@@ -33,7 +28,6 @@
     </section>
     <%- include ('layouts/footer') %>
     <script>
-        // document.getElementById('randomItems').innerHTML = "";
         let div = document.getElementById('randomItems')
         getRandomRecipes();
         function getRandomRecipes() {
@@ -41,35 +35,27 @@
         `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`,
         `https://www.themealdb.com/api/json/v1/1/random.php`, `https://www.themealdb.com/api/json/v1/1/random.php`
     ]
-    // randomRecipes = [];
     for (let i = 0; i < 6; i++) {
         fetch(urls[i],{
             method : 'get'
         }).then(res=>res.json()).then(data=>{
             data.meals.map(ele =>{
-                // for(var j=0 ; j<ele.length ; j++) {
                     console.log(ele.strMeal)
                     div.innerHTML += `<a href='d${ele.idMeal}'>
                 <section class="resultView">
                     <div class='overlayContainer'>
+
                         <img src="${ele.strMealThumb}" class="image" />
                         <div class="overlay">
                             <div class="text">${ele.strMeal}</div>
+
                         </div>
                     </div>
                 </section>
             </a>`
-                // }
           
-            })
-         
-            
+            })  
         })
-        // superagent.get(urls[i]).then(data => {
-        //     data.body.meals.map(element => {
-        //         randomRecipes.push(new Recipes(element))
-        //     });
-        // }).catch(handleError);
     }
 }
     </script>

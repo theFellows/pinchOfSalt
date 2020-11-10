@@ -1,95 +1,113 @@
 <header>
-    <div class="sidenav">
-        <a href="/"><img id='logo' src="/logo.png"></a>
-        <a href="/">Home</a>
-        <button class="dropdown-btn">World Cuisine
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-                <a href='aAmerican'>American</a>
-                <a href='aBritish'>British</a>
-                <a href="aCanadian">Canadian</a>
-                <a href="aChinese">Chinese</a>
-                <a href="aDutch">Dutch</a>
-                <a href="aEgyptian">Egyptian</a>
-                <a href="aFrench">French</a>
-                <a href="aGreek">Greek</a>
-                <a href="aIndian">Indian</a>
-                <a href="aIrish">Irish</a>
-                <a href="aItalian">Italian</a>
-                <a href="aJamaican">Jamaican</a>
-                <a href="aJapanese">Japanese</a>
-                <a href="aKenyan">Kenyan</a>
-                <a href="aMalaysian">Malaysian</a>
-                <a href="aMexican">Mexican</a>
-                <a href="aMoroccan">Moroccan</a>
-                <a href="aPolish">Polish</a>
-                <a href="aRussian">Russian</a>
-                <a href="aSpanish">Spanish</a>
-                <a href="aThai">Thai</a>
-                <a href="aTunisian">Tunisian</a>
-                <a href="aTurkish">Turkish</a>
-                <a href="aVietnamese">Vietnamese</a>
-                <a href="aUnknown">Unknown</a>
+    <div id="myNavArea" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavArea()">&times;</a>
+        <div id='overlayList1' class="overlay-content">
+            <a class="navEl" href='aAmerican'>American</a>
+            <a class="navEl" href='aBritish'>British</a>
+            <a class="navEl" href="aCanadian">Canadian</a>
+            <a class="navEl" href="aChinese">Chinese</a>
+            <a class="navEl" href="aDutch">Dutch</a>
+            <a class="navEl" href="aEgyptian">Egyptian</a>
+            <a class="navEl" href="aFrench">French</a>
+            <a id="end1" class="navEl" href="aGreek">Greek</a>
         </div>
-        <button class="dropdown-btn">Dishes
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
+        <div id='overlayList2' class="overlay-content">
+            <a class="navEl" href="aIndian">Indian</a>
+            <a class="navEl" href="aIrish">Irish</a>
+            <a class="navEl" href="aItalian">Italian</a>
+            <a class="navEl" href="aJamaican">Jamaican</a>
+            <a class="navEl" href="aJapanese">Japanese</a>
+            <a class="navEl" href="aKenyan">Kenyan</a>
+            <a class="navEl" href="aMalaysian">Malaysian</a>
+            <a class="navEl" href="aMexican">Mexican</a>
+        </div>
+
+        <div id='overlayList3' class="overlay-content">
+
+            <a class="navEl" href="aMoroccan">Moroccan</a>
+            <a class="navEl" href="aPolish">Polish</a>
+            <a class="navEl" href="aRussian">Russian</a>
+            <a class="navEl" href="aSpanish">Spanish</a>
+            <a class="navEl" href="aThai">Thai</a>
+            <a class="navEl" href="aTunisian">Tunisian</a>
+            <a class="navEl" href="aTurkish">Turkish</a>
+            <a class="navEl" href="aVietnamese">Vietnamese</a>
+        </div>
+
+    </div>
+
+    <div id="myNavCat" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavCat()">&times;</a>
+        <div id="overlayList1" class="overlay-content">
             <a href="cBeef">Beef</a>
             <a href="cBreakfast">Breakfast</a>
             <a href="cChicken">Chicken</a>
+            <a href="cSeafood">Seafood</a>
             <a href="cDessert">Dessert</a>
+        </div>
+        <div id="overlayList2" class="overlay-content">
             <a href="cGoat">Goat</a>
             <a href="cLamb">Lamb</a>
             <a href="cMiscellaneous">Miscellaneous</a>
             <a href="cPasta">Pasta</a>
-            <a href="cSeafood">Seafood</a>
+        </div>
+        <div id="overlayList3" class="overlay-content">
             <a href="cSide">Side</a>
             <a href="cStarter">Starter</a>
             <a href="cVegan">Vegan</a>
             <a href="cVegetarian">Vegetarian</a>
         </div>
-        <button class="dropdown-btn">My Cookbook
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
+    </div>
+
+    <div id="myNavBook" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavBook()">&times;</a>
+        <div id="overlayList1" class="overlay-content">
             <a onclick="toUserRecipes()">My Recipes</a>
+        </div>
+        <div id="overlayList2" class="overlay-content">
             <a onclick="toUserBookmarks()">Bookmarks</a>
         </div>
+    </div>
+
+    <div class="sidenav">
+        <a href="/"><img id='logo' src="/logo.png"></a>
+        <a href="/">Home</a>
+        <span onclick="openNavArea()">World Cuisine</span>
+        <span onclick="openNavCat()">Dishes</span>
+        <span onclick="openNavBook()">My Cookbook</span>
         <a href="">About Us</a>
         <a href="/loginForm" id="login">Sign In</a>
         <a href="/registerForm" id="sign">Sign Up</a>
-        <a href=""><button class="dropdown-btn"  id="logout" onclick="logOutFromSite()">Log Out</button></a>
+        <span><button id="logout" onclick="logOutFromSite()">Log Out</button></span>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-let login = document.getElementById('login');
-let signup = document.getElementById('sign');
-let logout = document.getElementById('logout')
-if(localStorage.getItem('token') == undefined) {
-logout.style.display = 'none';
-}
+        let login = document.getElementById('login');
+        let signup = document.getElementById('sign');
+        let logout = document.getElementById('logout')
+        if (localStorage.getItem('token') == undefined) {
+            logout.style.display = 'none';
+        }
 
-if(localStorage.getItem('token')){
-  logout.style.display = 'block';
-  login.style.display = 'none';
-  signup.style.display = 'none';
-}
+        if (localStorage.getItem('token')) {
+            logout.style.display = 'block';
+            login.style.display = 'none';
+            signup.style.display = 'none';
+        }
 
-function logOutFromSite() {
-    localStorage.removeItem('token');
-    window.location.replace('/loginForm')
-}
+        function logOutFromSite() {
+            localStorage.removeItem('token');
+            window.location.replace('/loginForm')
+        }
 
-let id = localStorage.getItem('id')
-function toUserRecipes() {
-    window.location.href = `recipe/${id}`
-}
+        let id = localStorage.getItem('id')
+        function toUserRecipes() {
+            window.location.href = `recipe/${id}`
+        }
 
-function toUserBookmarks() {
-    window.location.href = `bookmark/${id}`
-}
+        function toUserBookmarks() {
+            window.location.href = `bookmark/${id}`
+        }
     </script>
     <script src="/js/app.js"></script>
 
