@@ -131,7 +131,7 @@
   }
 
   #container1 form button{
-    font-family: ';
+    font-family: 'Lora', sans-serif;
     margin-top: 100px;
 
   }
@@ -421,3 +421,4 @@ left: -50px;
   top: 33px;
   left: 260px;
 }
+
