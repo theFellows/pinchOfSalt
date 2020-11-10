@@ -71,26 +71,16 @@
 }
 
 
-  /*detail page*/
-
-
-  #recipe-detail-body{
-    box-sizing: border-box;
-    background-image: url('https://i.pinimg.com/564x/5c/75/25/5c752531acb8b8d11b7ce10662cf65b2.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.9;
-    padding-bottom: 50px;
-    padding-top:100px;
-  }
+  /*detail page ---------------------------------------------------------- */
 
   #container{
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
-    margin-left: 270px;
+    margin-left: 60px;
     margin-bottom: 15px;
     padding-bottom: 5pc;
+    margin-top: 140px;;
   }
 
 
@@ -100,7 +90,12 @@
     /* margin-left: 50px;  */
     grid-column: 2/3;
     grid-row: 1/2;
-    font: 20px europe-boldergular, sans-serif;
+    font-size: 20px;
+    font-family: 'Lora', sans-serif;
+    position: relative;
+    left: -100px;
+    text-align: left;
+    padding-left: 150px;
 
   }
 
@@ -121,12 +116,12 @@
     height: 35vw;
     background-size: cover;
     border-radius: 10px;
-    box-shadow: 10px 10px 8px rgb(212, 75, 57);
+    box-shadow: 5px 5px 8px  #085239;
   }
 
 
   #container1 h2{
-    font: 55px europe-boldergular, sans-serif;
+    font: 55px 'Lora', sans-serif;
     color: #232322;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -136,7 +131,8 @@
   }
 
   #container1 form button{
-    font: 25px europe-boldergular, sans-serif;
+    font-family: ';
+    margin-top: 100px;
 
   }
 
@@ -145,19 +141,23 @@
     padding-top: 20px;
   }
 
+  #bold{
+    font-weight: bold;
+  }
 
   #recipe-detail-category{
     color: #111111;
     margin-top: 20px;
-    font: 25px europe-boldergular, sans-serif;
-
-  }
+    font: 25px 'Lora', sans-serif;
+    position: relative;
+    }
   
   
   #recipe-detail-origin{
     color:#111111;
     margin-top: 20px;
-    font: 25px europe-boldergular, sans-serif;
+    font: 25px 'Lora', sans-serif;
+    position: relative;
   }
   #recipe-list{
     color: #111111;
@@ -174,7 +174,6 @@
  
 
   #recipe-instructions{
-    background-image: url('https://i.pinimg.com/564x/5c/75/25/5c752531acb8b8d11b7ce10662cf65b2.jpg');
     clear: both;
     display: grid;
     grid-template-columns: 4fr 1fr;
@@ -201,7 +200,6 @@
 
 
  #recipe-instruction{
-  font-family:  'Antic Slab', serif;
   font-size: 23px;
   color: #232322;
   display:grid;
@@ -214,13 +212,13 @@
 #recipe-button{
   border: none;
   color: #f1f1f1;
-  background-color: #111;
   cursor: pointer;
   border-radius: 10px;
   padding: 15px;
   margin-top: 20px;
-
 }
+
+
 #recipe-button:focus{
   outline: none;
 }

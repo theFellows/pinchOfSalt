@@ -8,6 +8,13 @@ main{
   padding-left: 250px;
 }
 
+#logout{
+  background-color: white;
+}
+#logout:hover{
+  color: #cf1717;
+}
+
 #searchFormSection{
   margin-top: 80px;
   
