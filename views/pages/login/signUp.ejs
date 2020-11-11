@@ -7,76 +7,76 @@
     
 </head>
 <body id='signBg'>
-  <%- include('../layouts/header.ejs') %>
-
-
-<div id='detailMain' class="login-wrap">
-  <div class="login-html">
-    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-    <div class="login-form">
-      <div class="sign-in-htm">
-        <br>
-        <br>
-        <div class="group">
-
-          <input type="text" name="email" placeholder="Enter your email" id="email2" class="input">
+    <%- include('../layouts/header.ejs') %>
+  
+  
+  <div id='detailMain' class="login-wrap">
+    <div class="login-html">
+      <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+      <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+      <div class="login-form">
+        <div class="sign-in-htm">
           <br>
-          <p id="alert_email"></p>
-        <br>
-        </div>
-        <div class="group">
+          <br>
+          <div class="group">
 
-          <input type="password" name="password" placeholder="Enter your password" id="password2" class="input">
+            <input type="text" name="email" placeholder="Enter your email" id="email2" class="input">
+            <br>
+            <p id="alert_email"></p>
           <br>
-          <p id="alert_password"></p>
-        </div>
-        <br>
-        <div class="group">
-          <input id="check" type="checkbox" class="check" checked>
-          <label for="check"><span class="icon"></span> Keep me Signed in</label>
-        </div>
-        <br>
-        <br>
-        <div class="group">
-          <button onclick="LogIn()" class="signButton">Sign-In</button>
-        </div>
-        
-        
-      </div>
-      <div class="sign-up-htm">
-        <div class="group">
+          </div>
+          <div class="group">
+  
+            <input type="password" name="password" placeholder="Enter your password" id="password2" class="input">
+            <br>
+            <p id="alert_password"></p>
+          </div>
           <br>
+          <div class="group">
+            <input id="check" type="checkbox" class="check" checked>
+            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+          </div>
+          <br>
+          <br>
+          <div class="group">
+            <button onclick="LogIn()" class="signButton">Sign-In</button>
+          </div>
+          
+          
+        </div>
+        <div class="sign-up-htm">
+          <div class="group">
+            <br>
 
-          <input id="name" name="name" type="text" class="input" placeholder="Enter your UserName">
-          <br>
-          <p id="name-p"></p>
-          <br>
-        </div>
-        <div class="group">
+            <input id="name" name="name" type="text" class="input" placeholder="Enter your UserName">
+            <br>
+            <p id="name-p"></p>
+            <br>
+          </div>
+          <div class="group">
 
-          <input type="password" name="password" placeholder="Enter your Password" id="password" class="input">
-          <br>
-          <p id="email-p"></p>
-          <br>
+            <input type="password" name="password" placeholder="Enter your Password" id="password" class="input">
+            <br>
+            <p id="email-p"></p>
+            <br>
+          </div>
+          <div class="group">
+ 
+            <input type="text" name="email" placeholder="Enter your Email" id="email" class="input">
+            <br>
+            <p id="pass-p"></p>
+           <br>
+           <br>
+          </div>
+          <div class="group">
+            <button onclick="register()" class="signButton">Sign-Up</button>
+          </div>
+  
         </div>
-        <div class="group">
-
-          <input type="text" name="email" placeholder="Enter your Email" id="email" class="input">
-          <br>
-          <p id="pass-p"></p>
-         <br>
-         <br>
-        </div>
-        <div class="group">
-          <button onclick="register()" class="signButton">Sign-Up</button>
-        </div>
-
       </div>
     </div>
   </div>
-</div>
-
+  
 
 <script>
   
