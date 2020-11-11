@@ -433,7 +433,7 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	margin:auto;
 	max-width:525px;
-	min-height:670px;
+	min-height:720px;
   position:relative;
    background:#c8c8c8; 
 	opacity: 0.85;
@@ -492,7 +492,7 @@ a{color:inherit;text-decoration:none}
 .login-form .group .input,
 .login-form .group .signButton{
 	width:100%;
-	color:#fff;
+	color:black;
 	display:block;
 }
 .login-form .group .input,
