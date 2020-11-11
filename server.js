@@ -41,6 +41,7 @@ client.connect().then(() => {
 
 app.get('/', getRandomRecipes);
 app.post('/searches', getDataFromApi);
+app.get('/aboutUs', getaboutUs);
 //----------------------------------------------- filter routs
 app.get('/a:area_name', getRecipesByArea);
 app.get('/c:category_name', getRecipesByCategory);
@@ -64,7 +65,7 @@ app.get('/loginForm' , getFormLogin)
 app.post('/register', addInfoUser)
 app.post('/login', getInfoUser)
 //new
-app.get('/aboutUs', getaboutUs)
+
 
 // ------------------- functions for routs (get forms) ----------------------------
 
@@ -85,7 +86,7 @@ function getRandomRecipes(request,response) {
 } 
 //new
 function getaboutUs(request,response) {
-    response.render('pages/aboutUs')
+    response.render('pages/aboutUs');
 }
 // -------------------------------- functions for methods of routs ----------------------------
 

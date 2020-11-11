@@ -431,6 +431,10 @@ left: -50px;
 .aboutUs{
   font-family:'Gudea', sans-serif;
   color: rgb(156, 0, 0);
+  background-image: url('/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
  
 .teamimg {
