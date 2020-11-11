@@ -8,75 +8,75 @@
 </head>
 <body id='signBg'>
     <%- include('../layouts/header.ejs') %>
-
-
-<div id='detailsMain' class="login-wrap">
-	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="sign-in"><label for="tab-1" class="tab">Sign In</label>
-		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
-		<div class="login-form">
-			<div class="sign-in-htm">
-        <br>
-        <br>
-				<div class="group">
-          <label for="user" class="label">Email Address</label>
-          <input type="text" name="email" placeholder="Enter your email" id="email2" class="input">
+  
+  
+  <div id='detailMain' class="login-wrap">
+    <div class="login-html">
+      <input id="tab-1" type="radio" name="tab" class="sign-in"><label for="tab-1" class="tab">Sign In</label>
+      <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
+      <div class="login-form">
+        <div class="sign-in-htm">
           <br>
-          <p id="alert_email"></p>
-				<br>
-				</div>
-				<div class="group">
-					<label for="pass" class="label">Password</label>
-          <input type="password" name="password" placeholder="Enter your password" id="password2" class="input">
           <br>
-          <p id="alert_password"></p>
+          <div class="group">
+
+            <input type="text" name="email" placeholder="Enter your email" id="email2" class="input">
+            <br>
+            <p id="alert_email"></p>
+          <br>
+          </div>
+          <div class="group">
+  
+            <input type="password" name="password" placeholder="Enter your password" id="password2" class="input">
+            <br>
+            <p id="alert_password"></p>
+          </div>
+          <br>
+          <div class="group">
+            <input id="check" type="checkbox" class="check" checked>
+            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+          </div>
+          <br>
+          <br>
+          <div class="group">
+            <button onclick="LogIn()" class="signButton">Sign-In</button>
+          </div>
+          
+          
         </div>
-        <br>
-				<div class="group">
-					<input id="check" type="checkbox" class="check" checked>
-					<label for="check"><span class="icon"></span> Keep me Signed in</label>
+        <div class="sign-up-htm">
+          <div class="group">
+            <br>
+
+            <input id="name" name="name" type="text" class="input" placeholder="Enter your Username">
+            <br>
+            <p id="name-p"></p>
+            <br>
+          </div>
+          <div class="group">
+
+            <input type="password" name="password" placeholder="Enter your Password" id="password" class="input">
+            <br>
+            <p id="email-p"></p>
+            <br>
+          </div>
+          <div class="group">
+ 
+            <input type="text" name="email" placeholder="Enter your Email" id="email" class="input">
+            <br>
+            <p id="pass-p"></p>
+           <br>
+           <br>
+          </div>
+          <div class="group">
+            <button onclick="register()" class="signButton">Sign-Up</button>
+          </div>
+  
         </div>
-        <br>
-        <br>
-				<div class="group">
-          <button onclick="LogIn()" class="signButton">Sign-In</button>
-				</div>
-				
-				
-			</div>
-			<div class="sign-up-htm">
-				<div class="group">
-          <br>
-					<label for="user" class="label">Username</label>
-          <input id="name" name="name" type="text" class="input">
-          <br>
-          <p id="name-p"></p>
-          <br>
-				</div>
-				<div class="group">
-          <label for="pass" class="label">Password</label>
-          <input type="password" name="password" placeholder="Enter your password" id="password" class="input">
-          <br>
-          <p id="email-p"></p>
-          <br>
-				</div>
-				<div class="group">
-          <label for="pass" class="label">Email Address</label>
-          <input type="text" name="email" placeholder="Enter your email" id="email" class="input">
-          <br>
-          <p id="pass-p"></p>
-         <br>
-         <br>
-				</div>
-				<div class="group">
-          <button onclick="register()" class="signButton">Sign-Up</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>
-
+      </div>
+    </div>
+  </div>
+  
 <script>
   
 let Email_LogIn = document.getElementById("email2");
