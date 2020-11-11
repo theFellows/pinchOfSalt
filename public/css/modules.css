@@ -8,6 +8,34 @@ main{
   padding-left: 250px;
 }
 
+.socialImg{
+  width: 22px;
+  height: 22px;
+}
+
+.teamimg{
+  width: 200px;
+  height: 200px;
+}
+
+.about{
+  color: black;
+}
+#our{
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+#meet{
+  font-family: 'Kaushan Script', cursive;
+
+}
+
+.names{
+  font-weight: bold;
+  font-family: 'Kaushan Script', cursive;
+}
+
 #logout{
   background-color: white;
 }
