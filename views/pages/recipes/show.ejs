@@ -6,7 +6,7 @@
 <body class='lightBg'>
     <%- include('../layouts/header.ejs') %>
 
-<main>
+<main id="detailMain">
     <p class="elementsCount">You have <%= recipesList.length %> recipes in your cookbook.</p>
     <form action="/recipes/add" method="GET">
         <button class='mainAddButton' type="submit"><i class="fa fa-plus"
@@ -35,5 +35,8 @@
 
 
 </script>
+
+<%- include ('../layouts/footer') %>
+
 </body>
 </html>

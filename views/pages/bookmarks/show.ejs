@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include ('../layouts/head') %>
-<body class='lightBg'>
+<body id='detialMian' class='lightBg'>
     <%- include ('../layouts/header') %>
     <p id="elementsCountBookmarks">You have <%= bookmarksList.length %> bookmarks in your cookbook.</p>
 <section class="bookmarksShow">
@@ -24,5 +24,7 @@
     window.location.replace("/registerForm")
 }
 </script>
+<%- include ('../layouts/footer') %>
+
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body class='lightBg'>
     <%- include('../layouts/header.ejs') %>
 
-    <main>
+    <main id="detailMain">
         <!-- Image and Name ---------------------------------->
         <ul>
             <section class="resultDetails">
@@ -59,6 +59,8 @@
     <script>
         document.getElementById('id_user').value = localStorage.getItem('id')
     </script>
+        <%- include ('../layouts/footer') %>
+
 </body>
 
 </html>

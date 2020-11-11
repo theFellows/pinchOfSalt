@@ -380,6 +380,9 @@ left: -50px;
   vertical-align: middle;
 }
 
+#detailMain, #main{
+  padding-bottom: 200px;
+}
 
 #ingrTable tr:nth-child(even){background-color: #f2f2f2;}
 
