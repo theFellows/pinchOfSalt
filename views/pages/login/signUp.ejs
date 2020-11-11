@@ -6,11 +6,16 @@
     <%- include ('../layouts/head') %>
     
 </head>
+<style>
+  footer{
+    margin-top: 100px;
+  }
+</style>
 <body id='signBg'>
     <%- include('../layouts/header.ejs') %>
   
   
-  <div id='detailMain' class="login-wrap">
+  <div id='detailMain' class="login-wrap" style="margin-top: 75px;">
     <div class="login-html">
       <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Sign In</label>
       <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
@@ -54,15 +59,13 @@
             <br>
           </div>
           <div class="group">
-
-            <input type="password" name="password" placeholder="Enter your Password" id="password" class="input">
+            <input type="text" name="email" placeholder="Enter your Email" id="email" class="input">
             <br>
             <p id="email-p"></p>
             <br>
           </div>
           <div class="group">
- 
-            <input type="text" name="email" placeholder="Enter your Email" id="email" class="input">
+            <input type="password" name="password" placeholder="Enter your Password" id="password" class="input">
             <br>
             <p id="pass-p"></p>
            <br>
@@ -71,7 +74,6 @@
           <div class="group">
             <button onclick="register()" class="signButton">Sign-Up</button>
           </div>
-  
         </div>
       </div>
     </div>
