@@ -1,17 +1,16 @@
-
-
 <footer class="footer">
   <div class="footer__addr">
     <h1 class="footer__logo">Pinch Of Salt</h1>
-        
+
     <h2>Contact Us</h2>
-    
+    <br>
     <address>
       5534 Somewhere In. The World 22193-10212<br>
-          
-      <a class="footer__btn" href="#">Email Us</a>
-    </address>
+ <br>
+
+    </address>     
   </div>
+  
   
   <ul class="footer__nav">
     <li class="nav__item">
@@ -32,59 +31,42 @@
       </ul>
     </li>
     
-    <li class="nav__item nav__item--extra">
-      <h2 class="nav__title">Our Accounts</h2>
-      
-      <ul class="nav__ul nav__ul--extra">
+
+    
+     <ul class="footer__nav">
+    <li class="nav__item">
+      <h2 class="nav__title">Our Accountes</h2>
+
+      <ul class="nav__ul">
         <li>
           <a href="#">Facebook Account</a>
         </li>
-        
+
         <li>
           <a href="#">Instagram Account</a>
         </li>
-        
+            
         <li>
           <a href="#">Twitter Account</a>
         </li>
+      </ul>
+    </li>
+       
+         
+     <ul class="footer__nav">
+    <li class="nav__item">
+      <h2 class="nav__title"> <span>Food Made with Love  <span class="heart">♥</span> </span></h2>
+
+      <ul class="nav__ul">
+        <li>
+          <p>&copy; 2020 Something. All rights reserved.</p>
+        </li>
+      </ul>
+    </li>
+        
         
 
-   <div class="legal__links">
-      <span>Food Made with Love <span class="heart">♥</span> </span>
-    </div>
-  <div class="legal">
-    <p>&copy; 2020 Something. All rights reserved.</p>
-        </div>
+
    
   
 </footer>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-let login = document.getElementById('login');
-let signup = document.getElementById('sign');
-let logout = document.getElementById('logout')
-if(localStorage.getItem('token') == undefined) {
-logout.style.display = 'none';
-}
-
-if(localStorage.getItem('token' !== undefined)){
-  logout.style.display = 'block';
-  login.style.display = 'none';
-  signup.style.display = 'none';
-}
-</script>
