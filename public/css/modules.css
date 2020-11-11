@@ -91,13 +91,13 @@ form.searchForm button {
   background: white;
   color:  rgb(146, 11, 11);
   font-size: 17px;
-  border: 2px solid white;
+  border: 1px solid white;
   border-left: none;
   cursor: pointer;
   border-radius: 5px;
   position: relative;
   left: -38px;
-  top: 1px;
+  top: 0.8px;
 }
 
 form.searchForm button:hover {
@@ -139,7 +139,7 @@ background-position: right .7em top 50%, 0 0;
   background-size: .65em auto, 100%;
   position: relative;
   top: 10px;
-  left: 155px;
+  left: 141px;
   height: 30px;
 }
 
